@@ -4,12 +4,16 @@ set -euo pipefail
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$REPO/paths.sh"
 
+# By default skip machine-specific files (monitors.conf); --with-monitors includes them.
+extra_excludes=("${APPLY_EXCLUDES[@]}")
+if [[ "${1:-}" == --with-monitors ]]; then extra_excludes=(); fi
+
 for p in "${PATHS[@]}"; do
   src="$REPO/$p" dst="$HOME/$p"
   [ -e "$src" ] || { echo "skip (missing): $p"; continue; }
   mkdir -p "$(dirname "$dst")"
   if [ -d "$src" ]; then
-    rsync -a "${EXCLUDES[@]}" "${APPLY_EXCLUDES[@]}" "$src/" "$dst/"   # overlay, no --delete: keep machine-local files
+    rsync -a "${EXCLUDES[@]}" "${extra_excludes[@]}" "$src/" "$dst/"   # overlay, no --delete: keep machine-local files
   else
     rsync -a "$src" "$dst"
   fi

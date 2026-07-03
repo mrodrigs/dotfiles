@@ -10,6 +10,7 @@ PATHS=(
   .config/omarchy/hooks
   .config/omarchy/backgrounds
   .config/omarchy/branding
+  dev/tmux-statusbar          # custom tmux status bar, sourced by tmux.conf
 )
 
 # rsync excludes: plugin checkouts, backups, regenerated state, the theme symlink.

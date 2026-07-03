@@ -1,0 +1,11 @@
+#!/bin/bash
+# Re-apply the custom tmux status bar so its colors follow the new Omarchy
+# theme. Colors are read live from ~/.config/omarchy/current/theme, so the
+# theme name argument ($1) is not needed here.
+#
+# Safe when no tmux server is running: the script's `tmux set-option` calls
+# simply no-op.
+
+bar="$HOME/dev/tmux-statusbar/statusbar.tmux"
+[ -x "$bar" ] && "$bar" >/dev/null 2>&1
+exit 0

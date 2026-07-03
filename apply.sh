@@ -9,7 +9,7 @@ for p in "${PATHS[@]}"; do
   [ -e "$src" ] || { echo "skip (missing): $p"; continue; }
   mkdir -p "$(dirname "$dst")"
   if [ -d "$src" ]; then
-    rsync -a "${EXCLUDES[@]}" "$src/" "$dst/"   # overlay, no --delete: keep machine-local files
+    rsync -a "${EXCLUDES[@]}" "${APPLY_EXCLUDES[@]}" "$src/" "$dst/"   # overlay, no --delete: keep machine-local files
   else
     rsync -a "$src" "$dst"
   fi

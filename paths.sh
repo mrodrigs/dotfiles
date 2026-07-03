@@ -19,3 +19,9 @@ EXCLUDES=(
   --exclude='take-easy'        # theme lives in its own git repo
   --exclude='.git/'
 )
+
+# Excluded on apply only (still saved to the repo as a backup, just not pushed
+# onto other machines, since displays differ per PC).
+APPLY_EXCLUDES=(
+  --exclude='monitors.conf'
+)

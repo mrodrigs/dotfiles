@@ -58,8 +58,8 @@
   programs.fish = {
     enable = true;
     loginShellInit = ''
-      if uwsm check may-start; and uwsm select
-        exec systemd-cat -t uwsm_start uwsm start default
+      if uwsm check may-start
+        exec systemd-cat -t uwsm_start uwsm start -- Hyprland
       end
     '';
   };

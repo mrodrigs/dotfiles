@@ -12,6 +12,7 @@ in
   home.packages = with pkgs; [
     neovim
     lazygit
+    gcc
     tmux
     ghostty
     # Used directly by hypr/scripts/*.sh and hypr/{autostart,hypridle}.conf —

@@ -1,42 +1,29 @@
 # tmux-statusbar
 
-A minimal, **transparent**, **Omarchy-theme-aware** tmux status bar — centered
-window list with a session "pill" that lights up while the prefix is held.
+A minimal, **transparent** tmux status bar — centered window list with a
+session "pill" that lights up while the prefix is held.
 
 It started as a fork of [tmux-dotbar](https://github.com/vaaleyard/tmux-dotbar),
 with two changes:
 
 1. The bar background is transparent (`default`) so it blends into the
    terminal / Neovim background instead of painting its own strip.
-2. Its colors are pulled live from the current
-   [Omarchy](https://omarchy.org) theme, so it re-themes itself whenever you
-   run `omarchy theme set ...` — like a Chromium/Neovim theme follower.
-
-## Theme following
-
-Colors are resolved from the active theme at
-`~/.config/omarchy/current/theme`, in priority order:
-
-1. `colors.toml` — present in all stock themes (named keys + a base16 palette)
-2. `alacritty.toml` — fallback for custom themes without `colors.toml`
-3. Built-in Ayu defaults — if neither file/key is found
+2. Colors are Oxocarbon (`t_bg`/`t_fg`/`t_dim`/`t_accent`/`t_accent2` near the
+   top of `statusbar.tmux`) — edit those directly, or override per-option with
+   `@statusbar-*` below.
 
 Mapping:
 
-| Bar element | Theme color |
+| Bar element | Color |
 | --- | --- |
-| Active window text | `foreground` |
-| Inactive window / session text | `color8` (dim / bright-black) |
-| Prefix pill background | `color4` (accent) |
-| Prefix pill text | `background` |
-| Zoom icon | `color6` (secondary accent) |
+| Active window text | `t_fg` (foreground) |
+| Inactive window / session text | `t_dim` |
+| Prefix pill background | `t_accent` |
+| Prefix pill text | `t_bg` (background) |
+| Zoom icon | `t_accent2` |
 
-The bar background is **always** transparent — the theme's `background` is only
-borrowed for the pill text so it stays readable.
-
-Automatic re-theming is wired through the Omarchy hook
-`~/.config/omarchy/hooks/theme-set`, which re-runs `statusbar.tmux` after every
-theme change. Any explicit `@statusbar-*` override still wins over the theme.
+The bar background is **always** transparent — `t_bg` is only borrowed for the
+pill text so it stays readable.
 
 ## Preview
 
@@ -67,18 +54,15 @@ Then reload tmux (`tmux source ~/.config/tmux/tmux.conf`).
 
 Set any of these **before** the `run-shell` line:
 
-Color defaults below come from the **current Omarchy theme**; the hex values
-shown are the built-in fallback used only when no theme color is found.
-
 | Option | Default | Purpose |
 | --- | --- | --- |
 | `@statusbar-bg` | `default` | Bar background (keep `default` for transparency) |
-| `@statusbar-bg-contrast` | theme `background` | Text color used on bright accent pills |
-| `@statusbar-fg` | theme `color8` | Inactive window text |
-| `@statusbar-fg-current` | theme `foreground` | Active window text |
-| `@statusbar-fg-session` | theme `color8` | Session text |
-| `@statusbar-accent` | theme `color4` | Prefix highlight |
-| `@statusbar-accent-alt` | theme `color6` | Zoom icon |
+| `@statusbar-bg-contrast` | `t_bg` | Text color used on bright accent pills |
+| `@statusbar-fg` | `t_dim` | Inactive window text |
+| `@statusbar-fg-current` | `t_fg` | Active window text |
+| `@statusbar-fg-session` | `t_dim` | Session text |
+| `@statusbar-accent` | `t_accent` | Prefix highlight |
+| `@statusbar-accent-alt` | `t_accent2` | Zoom icon |
 | `@statusbar-position` | `top` | `top` or `bottom` |
 | `@statusbar-justify` | `absolute-centre` | Window list alignment |
 | `@statusbar-separator` | ` • ` | Between windows |

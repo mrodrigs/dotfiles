@@ -1,18 +1,15 @@
 #!/usr/bin/env bash
 #
-# tmux-statusbar — a minimal, transparent status bar that follows the
-# current Omarchy theme.
+# tmux-statusbar — a minimal, transparent status bar.
 #
 # Derived from tmux-dotbar (MIT, vaaleyard). The bar background is kept
-# transparent so it blends into the terminal / Neovim background; the rest of
-# the colors are pulled live from the active Omarchy theme, so the bar
-# re-themes itself whenever you run `omarchy theme set ...`.
+# transparent so it blends into the terminal / Neovim background.
 #
 # Usage (in ~/.config/tmux/tmux.conf):
 #   run-shell ~/dev/tmux-statusbar/statusbar.tmux
 #
 # Every color/option is overridable with `set -g @statusbar-* ...` BEFORE the
-# run-shell line; an explicit override always wins over the theme color.
+# run-shell line; an explicit override always wins over the default below.
 
 # --- helpers ----------------------------------------------------------------
 
@@ -26,40 +23,13 @@ get() {
   [ -n "$value" ] && echo "$value" || echo "$2"
 }
 
-# --- omarchy theme colors ---------------------------------------------------
-# Resolve each color from the current Omarchy theme. Source priority:
-#   1. colors.toml   (all stock themes + most custom ones; named + base16 keys)
-#   2. alacritty.toml (fallback for custom themes without colors.toml)
-#   3. built-in Ayu defaults (if neither file/key is found)
-# This is per-color, so a missing key only falls through for that one color.
+# --- theme colors (Oxocarbon) ------------------------------------------------
 
-theme_dir="$HOME/.config/omarchy/current/theme"
-ctoml="$theme_dir/colors.toml"
-alac="$theme_dir/alacritty.toml"
-
-# pick <file> <key-regex> [<nth-match>] -> first #RRGGBB on a matching,
-# non-comment line (comments and section headers are ignored).
-pick() {
-  local f="$1" key="$2" n="${3:-1}"
-  [ -f "$f" ] || return 1
-  grep -vE '^[[:space:]]*#' "$f" 2>/dev/null \
-    | grep -iE "^[[:space:]]*$key[[:space:]]*=" \
-    | grep -oiE '#[0-9A-Fa-f]{6}' | sed -n "${n}p"
-}
-
-# resolve <default> <colors.toml-key> <alacritty-key> [<alacritty-nth>]
-resolve() {
-  local out
-  out=$(pick "$ctoml" "$2");          [ -n "$out" ] && { echo "$out"; return; }
-  out=$(pick "$alac" "$3" "${4:-1}"); [ -n "$out" ] && { echo "$out"; return; }
-  echo "$1"
-}
-
-t_bg=$(resolve      "#0B0E14" "background" "background")     # theme background
-t_fg=$(resolve      "#BFBDB6" "foreground" "foreground")     # theme foreground
-t_dim=$(resolve     "#475266" "color8"     "black" 2)        # dim / bright-black
-t_accent=$(resolve  "#95E6CB" "color4"     "blue")           # primary accent
-t_accent2=$(resolve "#39BAE6" "color6"     "cyan")           # secondary accent
+t_bg="#161616"       # background
+t_fg="#f2f4f8"       # foreground
+t_dim="#525252"      # dim / inactive
+t_accent="#42be65"   # primary accent (green)
+t_accent2="#ff7eb6"  # secondary accent (pink)
 
 # --- palette ----------------------------------------------------------------
 # `bg` stays `default` (transparent) regardless of theme so the bar inherits

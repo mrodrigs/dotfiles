@@ -1,0 +1,8 @@
+#!/bin/bash
+# Close all open windows.
+
+hyprctl clients -j | \
+  jq -r ".[].address" | \
+  xargs -I{} hyprctl dispatch closewindow address:{}
+
+hyprctl dispatch workspace 1

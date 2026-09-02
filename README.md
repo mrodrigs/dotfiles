@@ -38,8 +38,8 @@ Plugin checkouts and third-party downloads, not your own config — regenerated 
 either platform:
 
 ```bash
-# tmux plugin manager + plugins
-git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+# tmux plugin manager + plugins (tmux.conf's `run` line expects ~/.tmux, not ~/.config/tmux)
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # then open tmux and hit prefix+I
 
 # ghostty custom cursor shaders

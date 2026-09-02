@@ -1,0 +1,4 @@
+#!/bin/bash
+# Toggle transparency for the currently focused window.
+
+hyprctl dispatch setprop "address:$(hyprctl activewindow -j | jq -r '.address')" opaque toggle

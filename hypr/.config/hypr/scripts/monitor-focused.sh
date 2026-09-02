@@ -1,0 +1,4 @@
+#!/bin/bash
+# Print the name of the currently focused Hyprland monitor.
+
+hyprctl monitors -j | jq -r '.[] | select(.focused == true).name'

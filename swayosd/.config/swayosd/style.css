@@ -1,4 +1,9 @@
-@import "../omarchy/current/theme/swayosd.css";
+/* Theme colors (Oxocarbon) */
+@define-color background-color #161616;
+@define-color border-color #42be65;
+@define-color label #f2f4f8;
+@define-color image #33b1ff;
+@define-color progress #42be65;
 
 window {
   border-radius: 0;

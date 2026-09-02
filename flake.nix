@@ -13,7 +13,7 @@
     };
   };
 
-  outputs = { nixpkgs, home-manager, ... }: {
+  outputs = { nixpkgs, home-manager, noctalia, ... }: {
     nixosConfigurations.pc = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
@@ -22,7 +22,9 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
-          home-manager.users.mauricio = import ./home.nix;
+          home-manager.users.mauricio = {
+            imports = [ noctalia.homeModules.default ./home.nix ];
+          };
         }
       ];
     };

@@ -1,6 +1,8 @@
 # dotfiles
 
-Personal config for Hyprland, waybar, walker, mako, swayosd, nvim, tmux, ghostty, fish, git, and XCompose.
+Personal config for Hyprland, nvim, tmux, ghostty, fish, git, and XCompose. Bar, launcher,
+notifications, and OSD are all [noctalia](https://github.com/noctalia-dev/noctalia), wired up as a
+home-manager module in `flake.nix`/`home.nix` — see the NixOS section below.
 Deployed one of two ways depending on the machine — same files, two mechanisms:
 
 - **Arch / any other Linux** — [GNU Stow](https://www.gnu.org/software/stow/) symlinks each package into `$HOME`.
@@ -14,10 +16,6 @@ lands at `~/.config/hypr/*` regardless of which mechanism deploys it.
 | Package | Lands at | What |
 |---|---|---|
 | `hypr` | `~/.config/hypr` | Hyprland (bindings, monitors, looknfeel, lock, idle, scripts…) |
-| `waybar` | `~/.config/waybar` | Bar config + style + scripts |
-| `walker` | `~/.config/walker` | Launcher |
-| `mako` | `~/.config/mako` | Notifications |
-| `swayosd` | `~/.config/swayosd` | Volume/brightness OSD |
 | `nvim` | `~/.config/nvim` | LazyVim config + `lazy-lock.json` (plugin version pins) |
 | `tmux` | `~/.config/tmux/tmux.conf`, `~/dev/tmux-statusbar` | tmux config + custom status bar (sourced by `tmux.conf`) |
 | `ghostty` | `~/.config/ghostty/config` | Terminal |
@@ -28,6 +26,10 @@ lands at `~/.config/hypr/*` regardless of which mechanism deploys it.
 `nixos/` is NixOS-only: `nixos/hosts/<host>/{configuration.nix,hardware-configuration.nix}`, one folder per
 machine. `flake.nix` and `home.nix` sit at the repo root since they're shared across every host (see the
 NixOS section below for why).
+
+noctalia isn't a package in the table above: it has no directory here to stow. `home.nix` pulls it in via
+the `noctalia` flake input's home-manager module (`programs.noctalia.enable`), which installs the package
+and writes `~/.config/noctalia` itself — NixOS-only, not part of the Stow flow.
 
 `monitors.conf` (inside `hypr`) and `hardware-configuration.nix` (inside `nixos/hosts/<host>`) are the two
 genuinely machine-specific files in this repo — expect to check/edit them on every new box.
@@ -58,7 +60,6 @@ genuinely machine-specific files in this repo — expect to check/edit them on e
 │           │   ├── mic-mute-led.sh
 │           │   ├── monitor-focused.sh
 │           │   ├── monitor-scaling-cycle.sh
-│           │   ├── swayosd-client.sh
 │           │   ├── terminal-cwd.sh
 │           │   ├── window-close-all.sh
 │           │   ├── window-pop.sh
@@ -76,10 +77,6 @@ genuinely machine-specific files in this repo — expect to check/edit them on e
 │           ├── monitors.conf
 │           ├── windows.conf
 │           └── xdph.conf
-├── mako
-│   └── .config
-│       └── mako
-│           └── config
 ├── nixos
 │   └── hosts
 │       └── pc
@@ -116,11 +113,6 @@ genuinely machine-specific files in this repo — expect to check/edit them on e
 │           ├── lazy-lock.json
 │           ├── lazyvim.json
 │           └── stylua.toml
-├── swayosd
-│   └── .config
-│       └── swayosd
-│           ├── config.toml
-│           └── style.css
 ├── tmux
 │   ├── .config
 │   │   └── tmux
@@ -132,17 +124,6 @@ genuinely machine-specific files in this repo — expect to check/edit them on e
 │           ├── .gitignore
 │           ├── README.md
 │           └── statusbar.tmux
-├── walker
-│   └── .config
-│       └── walker
-│           └── config.toml
-├── waybar
-│   └── .config
-│       └── waybar
-│           ├── scripts
-│           │   └── weather-temp.sh
-│           ├── config.jsonc
-│           └── style.css
 ├── xcompose
 │   └── .XCompose
 ├── README.md
@@ -175,7 +156,7 @@ git clone https://github.com/sahaj-b/ghostty-cursor-shaders ~/.config/ghostty/sh
 ```bash
 git clone git@github.com:mrodrigs/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-stow hypr waybar walker mako swayosd nvim tmux ghostty fish git xcompose
+stow hypr nvim tmux ghostty fish git xcompose
 ```
 
 If a target file already exists (e.g. a fresh install's default `~/.config/fish`), either remove it first or
@@ -186,6 +167,9 @@ stow --adopt <package>   # then `git diff` to check nothing unwanted got pulled 
 ```
 
 Check `hypr/.config/hypr/monitors.conf` once stowed — it's this machine's display layout, not a template.
+
+noctalia itself isn't covered here — it's wired up only through the NixOS home-manager module below. On
+Arch, install it separately (e.g. the AUR package) and configure it outside this repo.
 
 ### Update
 
@@ -284,8 +268,8 @@ machine); only `nixos/hosts/<host>/` differs per machine.
    Reboot into the new system once it finishes.
 
 7. First login as `mauricio`: the dotfiles are already at `~/dotfiles` (that's what
-   `/mnt/home/mauricio/dotfiles` became), Hyprland/waybar/etc. are already live via Home Manager. Add an SSH
-   key and switch the remote:
+   `/mnt/home/mauricio/dotfiles` became), Hyprland/noctalia/etc. are already live via Home Manager. Add an
+   SSH key and switch the remote:
 
    ```bash
    ssh-keygen -t ed25519 -C mauricio@pc   # add the pubkey to GitHub

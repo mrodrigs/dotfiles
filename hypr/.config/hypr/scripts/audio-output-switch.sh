@@ -1,13 +1,11 @@
 #!/bin/bash
 # Switch between audio outputs while preserving the mute status.
 
-dir="$(dirname "$0")"
-
 sinks=$(pactl -f json list sinks | jq '[.[] | select((.ports | length == 0) or ([.ports[]? | .availability != "not available"] | any))]')
 sinks_count=$(echo "$sinks" | jq '. | length')
 
 if (( sinks_count == 0 )); then
-  "$dir/swayosd-client.sh" --custom-message "No audio devices found"
+  noctalia msg notification-show "No audio devices found"
   exit 1
 fi
 
@@ -35,27 +33,9 @@ if [[ $next_sink_description == "(null)" ]] || [[ $next_sink_description == "nul
   fi
 fi
 
-next_sink_volume=$(echo "$next_sink" | jq -r \
-  '.volume | to_entries[0].value.value_percent | sub("%"; "")')
-next_sink_is_muted=$(echo "$next_sink" | jq -r '.mute')
-
-if [[ $next_sink_is_muted = "true" ]] || (( next_sink_volume == 0 )); then
-  icon_state="muted"
-elif (( next_sink_volume <= 33 )); then
-  icon_state="low"
-elif (( next_sink_volume <= 66 )); then
-  icon_state="medium"
-else
-  icon_state="high"
-fi
-
-next_sink_volume_icon="sink-volume-${icon_state}-symbolic"
-
 if [[ $next_sink_name != $current_sink_name ]]; then
   next_sink_wpid=$(echo "$next_sink" | jq -r '.properties."object.id"')
   wpctl set-default "$next_sink_wpid"
 fi
 
-"$dir/swayosd-client.sh" \
-  --custom-message "$next_sink_description" \
-  --custom-icon "$next_sink_volume_icon"
+noctalia msg notification-show "$next_sink_description"

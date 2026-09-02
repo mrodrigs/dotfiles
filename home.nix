@@ -10,10 +10,6 @@ in
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
-    waybar
-    walker
-    mako
-    swayosd
     neovim
     tmux
     ghostty
@@ -27,12 +23,12 @@ in
     xdg-terminal-exec
   ];
 
+  # Package + ~/.config/noctalia come from the home-manager module (see flake.nix);
+  # launched via hypr/autostart.conf like the other bar/launcher/notification daemons.
+  programs.noctalia.enable = true;
+
   home.file = {
     ".config/hypr".source = link "hypr/.config/hypr";
-    ".config/waybar".source = link "waybar/.config/waybar";
-    ".config/walker".source = link "walker/.config/walker";
-    ".config/mako".source = link "mako/.config/mako";
-    ".config/swayosd".source = link "swayosd/.config/swayosd";
     ".config/nvim".source = link "nvim/.config/nvim";
     ".config/tmux/tmux.conf".source = link "tmux/.config/tmux/tmux.conf";
     "dev/tmux-statusbar".source = link "tmux/dev/tmux-statusbar";

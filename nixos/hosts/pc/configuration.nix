@@ -20,7 +20,7 @@
     type = "fcitx5";
   };
 
-  # hypr/autostart.conf starts fcitx5/hypridle/waybar/mako itself via
+  # hypr/autostart.conf starts fcitx5/hypridle/noctalia itself via
   # exec-once, but the audio stack and the polkit agent need real services.
   security.rtkit.enable = true;
   services.pipewire = {

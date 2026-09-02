@@ -19,8 +19,6 @@ in
     ghostty
   ];
 
-  programs.fish.enable = true;
-
   home.file = {
     ".config/hypr".source = link "hypr/.config/hypr";
     ".config/waybar".source = link "waybar/.config/waybar";

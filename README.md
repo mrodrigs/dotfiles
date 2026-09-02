@@ -32,6 +32,124 @@ NixOS section below for why).
 `monitors.conf` (inside `hypr`) and `hardware-configuration.nix` (inside `nixos/hosts/<host>`) are the two
 genuinely machine-specific files in this repo — expect to check/edit them on every new box.
 
+```
+.
+├── fish
+│   └── .config
+│       └── fish
+│           └── conf.d
+│               └── uv.env.fish
+├── ghostty
+│   └── .config
+│       └── ghostty
+│           └── config
+├── git
+│   └── .config
+│       └── git
+│           ├── config
+│           └── ignore
+├── hypr
+│   └── .config
+│       └── hypr
+│           ├── scripts
+│           │   ├── audio-input-mute.sh
+│           │   ├── audio-output-switch.sh
+│           │   ├── hypr-kill-focused.sh
+│           │   ├── mic-mute-led.sh
+│           │   ├── monitor-focused.sh
+│           │   ├── monitor-scaling-cycle.sh
+│           │   ├── swayosd-client.sh
+│           │   ├── terminal-cwd.sh
+│           │   ├── window-close-all.sh
+│           │   ├── window-pop.sh
+│           │   ├── window-transparency-toggle.sh
+│           │   └── workspace-layout-toggle.sh
+│           ├── autostart.conf
+│           ├── bindings.conf
+│           ├── envs.conf
+│           ├── hypridle.conf
+│           ├── hyprland.conf
+│           ├── hyprlock.conf
+│           ├── hyprsunset.conf
+│           ├── input.conf
+│           ├── looknfeel.conf
+│           ├── monitors.conf
+│           ├── windows.conf
+│           └── xdph.conf
+├── mako
+│   └── .config
+│       └── mako
+│           └── config
+├── nixos
+│   └── hosts
+│       └── pc
+│           ├── configuration.nix
+│           └── hardware-configuration.nix
+├── nvim
+│   └── .config
+│       └── nvim
+│           ├── lua
+│           │   ├── config
+│           │   │   ├── autocmds.lua
+│           │   │   ├── keymaps.lua
+│           │   │   ├── lazy.lua
+│           │   │   └── options.lua
+│           │   └── plugins
+│           │       ├── all-themes.lua
+│           │       ├── colorizer.lua
+│           │       ├── disable-news-alert.lua
+│           │       ├── example.lua
+│           │       ├── glow-split.lua
+│           │       ├── go.lua
+│           │       ├── lsp_lines.lua
+│           │       ├── omarchy-theme-hotreload.lua
+│           │       ├── snacks-animated-scrolling-off.lua
+│           │       └── theme.lua
+│           ├── plugin
+│           │   └── after
+│           │       └── transparency.lua
+│           ├── .gitignore
+│           ├── .neoconf.json
+│           ├── LICENSE
+│           ├── README.md
+│           ├── init.lua
+│           ├── lazy-lock.json
+│           ├── lazyvim.json
+│           └── stylua.toml
+├── swayosd
+│   └── .config
+│       └── swayosd
+│           ├── config.toml
+│           └── style.css
+├── tmux
+│   ├── .config
+│   │   └── tmux
+│   │       └── tmux.conf
+│   └── dev
+│       └── tmux-statusbar
+│           ├── scripts
+│           │   └── window-process.sh
+│           ├── .gitignore
+│           ├── README.md
+│           └── statusbar.tmux
+├── walker
+│   └── .config
+│       └── walker
+│           └── config.toml
+├── waybar
+│   └── .config
+│       └── waybar
+│           ├── scripts
+│           │   └── weather-temp.sh
+│           ├── config.jsonc
+│           └── style.css
+├── xcompose
+│   └── .XCompose
+├── README.md
+├── flake.nix
+└── home.nix
+```
+
 ## Not tracked here (reinstall separately)
 
 Plugin checkouts and third-party downloads, not your own config — regenerated instead of versioned, on
@@ -152,7 +270,18 @@ machine); only `nixos/hosts/<host>/` differs per machine.
    nixos-install --root /mnt --flake /mnt/home/mauricio/dotfiles#pc
    ```
 
-   Prompts for the root password. Reboot into the new system once it finishes.
+   Prompts for the root password. This only sets root's password — `users.users.mauricio` has no
+   `initialPassword`/`hashedPassword`, so that account has none yet. Set one before rebooting, still
+   chrooted into the target. The `mauricio` user also doesn't exist yet in step 3, when the repo was cloned
+   as `root` from the live ISO — fix ownership here too, now that `mauricio` exists in the target's
+   `/etc/passwd`, or every `git` command will complain about "dubious ownership":
+
+   ```bash
+   nixos-enter --root /mnt -c 'passwd mauricio'
+   nixos-enter --root /mnt -c 'chown -R mauricio: /home/mauricio/dotfiles'
+   ```
+
+   Reboot into the new system once it finishes.
 
 7. First login as `mauricio`: the dotfiles are already at `~/dotfiles` (that's what
    `/mnt/home/mauricio/dotfiles` became), Hyprland/waybar/etc. are already live via Home Manager. Add an SSH

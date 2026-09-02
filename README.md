@@ -1,46 +1,63 @@
 # dotfiles
 
-Omarchy config, synced across machines with two rsync scripts — no symlinks, no stow.
-`save.sh` copies live configs **into** the repo; `apply.sh` copies them **out** onto a machine.
+Managed with [GNU Stow](https://www.gnu.org/software/stow/) — one package per directory, each mirroring
+`$HOME`. `stow <package>` symlinks its contents into place; `stow -D <package>` removes the symlinks.
 
-## What's tracked
+## Packages
 
-| Path | What |
-|------|------|
-| `.config/hypr` | Hyprland (bindings, monitors, looknfeel, lock, idle…) |
-| `.config/nvim` | LazyVim config + `lazy-lock.json` (plugin version pins) |
-| `.config/tmux/tmux.conf` | tmux config |
-| `.config/walker` | launcher |
-| `.config/waybar` | bar config + style |
-| `.config/omarchy/{hooks,backgrounds,branding}` | omarchy customizations |
+| Package | Symlinks to | What |
+|---|---|---|
+| `hypr` | `~/.config/hypr` | Hyprland (bindings, monitors, looknfeel, lock, idle, scripts…) |
+| `waybar` | `~/.config/waybar` | Bar config + style + scripts |
+| `walker` | `~/.config/walker` | Launcher |
+| `mako` | `~/.config/mako` | Notifications |
+| `swayosd` | `~/.config/swayosd` | Volume/brightness OSD |
+| `nvim` | `~/.config/nvim` | LazyVim config + `lazy-lock.json` (plugin version pins) |
+| `tmux` | `~/.config/tmux/tmux.conf`, `~/dev/tmux-statusbar` | tmux config + custom status bar (sourced by `tmux.conf`) |
+| `ghostty` | `~/.config/ghostty/config` | Terminal |
+| `fish` | `~/.config/fish` | Shell |
+| `git` | `~/.config/git/{config,ignore}` | git aliases/config |
+| `xcompose` | `~/.XCompose` | Compose key sequences |
 
-Not tracked (reinstalled instead): themes → `themes-reinstall.sh`; tmux/nvim plugins → reinstall from lock files.
-The tracked list lives in `paths.sh` — edit there, both scripts read it.
-
-## Save (on the machine you're configuring from)
+## Install (new machine)
 
 ```bash
-bash ~/dotfiles/save.sh          # harvest live ~/.config into the repo
-git -C ~/dotfiles add -A && git -C ~/dotfiles commit -m update && git -C ~/dotfiles push
+git clone git@github.com:mrodrigs/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+stow hypr waybar walker mako swayosd nvim tmux ghostty fish git xcompose
 ```
 
-## Apply (on a new/other machine)
+If a target file already exists (e.g. a fresh install's default `~/.config/fish`), either remove it first or
+adopt it into the repo (careful: this overwrites the repo copy with whatever's live):
 
 ```bash
-git clone <repo-url> ~/dotfiles
-bash ~/dotfiles/apply.sh                 # deploy configs (skips monitors.conf)
-bash ~/dotfiles/apply.sh --with-monitors # ...or include monitors.conf too
+stow --adopt <package>   # then `git diff` to check nothing unwanted got pulled in
+```
 
-bash ~/dotfiles/themes-reinstall.sh      # re-download installed themes
-git clone git@github.com:mrodrigs/take-easy-omarchy.git ~/.config/omarchy/themes/take-easy
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm   # then: tmux, prefix + I
-omarchy theme set "Take Easy"
-hyprctl reload && omarchy restart waybar
+## Reinstall separately (not versioned here)
+
+These are regenerated/reinstalled rather than tracked, since they're plugin checkouts or third-party
+downloads, not your own config:
+
+```bash
+# tmux plugin manager + plugins
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+tmux new -d && tmux send-keys -t 0 'prefix + I'   # or just open tmux and hit prefix+I
+
+# ghostty custom cursor shaders
+git clone https://github.com/sahaj-b/ghostty-cursor-shaders ~/.config/ghostty/shaders
+
 # nvim plugins auto-install from lazy-lock.json on first launch
 ```
 
-## Notes
+`monitors.conf` (inside the `hypr` package) is machine-specific — check it before stowing on a new box, or
+just edit it locally after; it's a real file like any other, git tracks your edits.
 
-- `save.sh` mirrors with `--delete` (repo stays clean). `apply.sh` overlays without `--delete` (won't wipe machine-local files).
-- `monitors.conf` is saved to the repo but skipped on apply by default, since displays differ per PC. Use `--with-monitors` to force it.
-- `apply.sh` overwrites configs in place — `git` is your undo.
+
+## Add a new package
+
+```bash
+mkdir -p newpkg/.config/newapp
+mv ~/.config/newapp/* newpkg/.config/newapp/
+stow newpkg
+```

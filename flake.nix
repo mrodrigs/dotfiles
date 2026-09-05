@@ -10,12 +10,13 @@
     serpantinum.url = "github:ilyamiro/serpantinum";
   };
 
-  outputs = { nixpkgs, home-manager, serpantinum, ... }: {
-    nixosConfigurations.pc = nixpkgs.lib.nixosSystem {
+  outputs = { nixpkgs, home-manager, serpantinum, ... }:
+  let
+    mkHost = hostConfig: nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit serpantinum; };
       modules = [
-        ./nixos/hosts/pc/configuration.nix
+        hostConfig
         serpantinum.nixosModules.default
         home-manager.nixosModules.home-manager
         {
@@ -27,6 +28,11 @@
           };
         }
       ];
+    };
+  in {
+    nixosConfigurations = {
+      vm = mkHost ./nixos/hosts/vm/configuration.nix;
+      pc = mkHost ./nixos/hosts/pc/configuration.nix;
     };
   };
 }

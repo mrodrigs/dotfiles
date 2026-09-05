@@ -21,9 +21,14 @@ lands at `~/.config/hypr/*` regardless of which mechanism deploys it.
 | `git` | `~/.config/git/{config,ignore}` | git aliases/config |
 | `xcompose` | `~/.XCompose` | Compose key sequences |
 
-`nixos/` is NixOS-only: `nixos/hosts/<host>/{configuration.nix,hardware-configuration.nix}`, one folder per
-machine. `flake.nix` and `home.nix` sit at the repo root since they're shared across every host (see the
-NixOS section below for why).
+`nixos/` is NixOS-only: `nixos/common.nix` holds everything shared across machines (desktop, services, user);
+`nixos/hosts/<host>/{configuration.nix,hardware-configuration.nix}` holds only what's actually
+machine-specific — disk layout and bootloader. `flake.nix` and `home.nix` sit at the repo root since they're
+shared across every host.
+
+Two hosts today: `vm` (throwaway VM, sole OS, `systemd-boot`) and `pc` (real machine, triple-boots
+Arch/Limine + Windows, `grub` chainloaded by Limine — see `nixos/hosts/pc/configuration.nix` for why the
+bootloader options differ from `vm`).
 
 `monitors.conf` (inside `hypr`) and `hardware-configuration.nix` (inside `nixos/hosts/<host>`) are the two
 genuinely machine-specific files in this repo — expect to check/edit them on every new box.
@@ -72,8 +77,12 @@ genuinely machine-specific files in this repo — expect to check/edit them on e
 │           ├── windows.conf
 │           └── xdph.conf
 ├── nixos
+│   ├── common.nix
 │   └── hosts
-│       └── pc
+│       ├── pc
+│       │   ├── configuration.nix
+│       │   └── hardware-configuration.nix
+│       └── vm
 │           ├── configuration.nix
 │           └── hardware-configuration.nix
 ├── nvim
@@ -230,11 +239,11 @@ machine); only `nixos/hosts/<host>/` differs per machine.
    (replaces the placeholder if reusing an existing host name like `pc`):
 
    ```bash
-   nixos-generate-config --root /mnt --show-hardware-config > /mnt/home/mauricio/dotfiles/nixos/hosts/pc/hardware-configuration.nix
+   nixos-generate-config --root /mnt --show-hardware-config > /mnt/home/mauricio/dotfiles/nixos/hosts/vm/hardware-configuration.nix
    ```
 
 5. Review before installing:
-   - `nixos/hosts/pc/configuration.nix` — `system.stateVersion`, timezone, bootloader (`systemd-boot` vs
+   - `nixos/hosts/vm/configuration.nix` — `system.stateVersion`, timezone, bootloader (`systemd-boot` vs
      `grub`, matches the ESP partition from step 2)
    - `home.nix` — `home.stateVersion` (keep in sync with `system.stateVersion`), and that every name in
      `home.packages` still exists in nixpkgs (`nix search nixpkgs <name>`, from the `nix-shell` in step 3)
@@ -242,7 +251,7 @@ machine); only `nixos/hosts/<host>/` differs per machine.
 6. Install using the flake instead of the generated default config:
 
    ```bash
-   nixos-install --root /mnt --flake /mnt/home/mauricio/dotfiles#pc
+   nixos-install --root /mnt --flake /mnt/home/mauricio/dotfiles#vm
    ```
 
    Prompts for the root password. This only sets root's password — `users.users.mauricio` has no
@@ -263,7 +272,7 @@ machine); only `nixos/hosts/<host>/` differs per machine.
    SSH key and switch the remote:
 
    ```bash
-   ssh-keygen -t ed25519 -C mauricio@pc   # add the pubkey to GitHub
+   ssh-keygen -t ed25519 -C mauricio@vm   # add the pubkey to GitHub
    cd ~/dotfiles && git remote set-url origin git@github.com:mrodrigs/dotfiles.git
    ```
 
@@ -272,9 +281,9 @@ machine); only `nixos/hosts/<host>/` differs per machine.
 ```bash
 git clone git@github.com:mrodrigs/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-sudo nixos-generate-config --show-hardware-config > nixos/hosts/pc/hardware-configuration.nix
+sudo nixos-generate-config --show-hardware-config > nixos/hosts/vm/hardware-configuration.nix
 # same review as step 5 above
-sudo nixos-rebuild switch --flake ~/dotfiles#pc
+sudo nixos-rebuild switch --flake ~/dotfiles#vm
 ```
 
 ### Update
@@ -284,7 +293,7 @@ cd ~/dotfiles
 git add -A && git commit -m update && git push
 ```
 
-Rebuild (`sudo nixos-rebuild switch --flake ~/dotfiles#pc`) only if `home.nix`, `configuration.nix`, or
+Rebuild (`sudo nixos-rebuild switch --flake ~/dotfiles#vm`) only if `home.nix`, `configuration.nix`, or
 `flake.nix` itself changed — not needed for edits inside an already-linked package.
 
 ### Add a new package
@@ -303,5 +312,5 @@ Then add it to `home.nix`'s `home.file` block:
 And apply:
 
 ```bash
-sudo nixos-rebuild switch --flake ~/dotfiles#pc
+sudo nixos-rebuild switch --flake ~/dotfiles#vm
 ```

@@ -16,6 +16,14 @@ in
     tmux
     ghostty
     chromium
+    spotify
+    claude-code
+    discord
+    teamspeak_client
+    htop
+    btop
+    obs-studio
+    zapzap
     # Used directly by hypr/scripts/*.sh and hypr/{autostart,hypridle}.conf —
     # not pulled in by `programs.hyprland.enable`.
     jq

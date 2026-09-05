@@ -1,13 +1,56 @@
-{ config, pkgs, ... }:
+{ config, pkgs, serpantinum, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/dotfiles";
   link = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
 in
 {
+  imports = [
+    serpantinum.homeManagerModules.default
+  ];
+
   home.username = "mauricio";
   home.homeDirectory = "/home/mauricio";
   home.stateVersion = "26.05";
+
+  programs.serpantinum = {
+    enable = true;
+    systemd.enable = true;
+
+    settings = {
+      wallpaperDir = "${config.home.homeDirectory}/Pictures/Wallpapers";
+
+      general = {
+        language = "en";
+        weatherUnit = "metric";
+        weatherInterval = 30;
+      };
+
+      bar = {
+        position = "top";
+        style = "solid";
+        width = 40;
+        workspaceCount = 10;
+        modules = {
+          left = [ "workspaces" ];
+          center = [ "time" ];
+          right = [ "tray" [ "kb" "wifi" "bt" "vol" "bat" ] ];
+        };
+      };
+
+      theme = {
+        fontFamily = "Adwaita Mono";
+        borderRadius = 12;
+        matugen = true;
+      };
+
+      notifications = {
+        dnd = false;
+        position = "top right";
+        sound = true;
+      };
+    };
+  };
 
   home.packages = with pkgs; [
     neovim

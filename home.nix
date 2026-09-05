@@ -1,13 +1,22 @@
-{ config, pkgs, ... }:
+{ config, pkgs, astal, ags, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/dotfiles";
   link = path: config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${path}";
 in
 {
+  imports = [
+    ags.homeManagerModules.default
+  ];
+
   home.username = "mauricio";
   home.homeDirectory = "/home/mauricio";
   home.stateVersion = "26.05";
+
+  programs.ags = {
+    enable = true;
+    extraPackages = with astal.packages.${pkgs.system}; [ io astal4 ];
+  };
 
   home.packages = with pkgs; [
     neovim

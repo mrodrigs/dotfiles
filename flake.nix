@@ -16,9 +16,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.astal.follows = "astal";
     };
+    ts3-noweb = {
+      url = "github:Jokler/ts3client-noweb-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, astal, ags, ... }:
+  outputs = { nixpkgs, home-manager, astal, ags, ts3-noweb, ... }:
   let
     mkHost = hostConfig: nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
@@ -26,6 +30,7 @@
         hostConfig
         home-manager.nixosModules.home-manager
         {
+          nixpkgs.overlays = [ ts3-noweb.overlays.default ];
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit astal ags; };

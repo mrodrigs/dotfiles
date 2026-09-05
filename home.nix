@@ -28,7 +28,7 @@ in
     spotify
     claude-code
     discord
-    teamspeak_client
+    teamspeak3
     htop
     btop
     obs-studio

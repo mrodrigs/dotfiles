@@ -43,6 +43,7 @@
     enable = true;
     withUWSM = true;
   };
+  programs.steam.enable = true;
 
   # hypr/xdph.conf configures the screenshare picker — needs the portal itself.
   xdg.portal = {

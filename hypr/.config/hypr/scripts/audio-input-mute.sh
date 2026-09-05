@@ -3,7 +3,7 @@
 
 dir="$(dirname "$0")"
 
-noctalia msg mic-mute
+wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle >/dev/null
 
 if pactl get-source-mute @DEFAULT_SOURCE@ | grep -q 'yes'; then
   led=on

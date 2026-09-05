@@ -1,8 +1,6 @@
 # dotfiles
 
-Personal config for Hyprland, nvim, tmux, ghostty, fish, git, and XCompose. Bar, launcher,
-notifications, and OSD are all [noctalia](https://github.com/noctalia-dev/noctalia), wired up as a
-home-manager module in `flake.nix`/`home.nix` — see the NixOS section below.
+Personal config for Hyprland, nvim, tmux, ghostty, fish, git, and XCompose.
 Deployed one of two ways depending on the machine — same files, two mechanisms:
 
 - **Arch / any other Linux** — [GNU Stow](https://www.gnu.org/software/stow/) symlinks each package into `$HOME`.
@@ -26,10 +24,6 @@ lands at `~/.config/hypr/*` regardless of which mechanism deploys it.
 `nixos/` is NixOS-only: `nixos/hosts/<host>/{configuration.nix,hardware-configuration.nix}`, one folder per
 machine. `flake.nix` and `home.nix` sit at the repo root since they're shared across every host (see the
 NixOS section below for why).
-
-noctalia isn't a package in the table above: it has no directory here to stow. `home.nix` pulls it in via
-the `noctalia` flake input's home-manager module (`programs.noctalia.enable`), which installs the package
-and writes `~/.config/noctalia` itself — NixOS-only, not part of the Stow flow.
 
 `monitors.conf` (inside `hypr`) and `hardware-configuration.nix` (inside `nixos/hosts/<host>`) are the two
 genuinely machine-specific files in this repo — expect to check/edit them on every new box.
@@ -168,9 +162,6 @@ stow --adopt <package>   # then `git diff` to check nothing unwanted got pulled 
 
 Check `hypr/.config/hypr/monitors.conf` once stowed — it's this machine's display layout, not a template.
 
-noctalia itself isn't covered here — it's wired up only through the NixOS home-manager module below. On
-Arch, install it separately (e.g. the AUR package) and configure it outside this repo.
-
 ### Update
 
 Every live config file is a symlink into this repo, so editing it *is* editing the repo — there's no
@@ -268,7 +259,7 @@ machine); only `nixos/hosts/<host>/` differs per machine.
    Reboot into the new system once it finishes.
 
 7. First login as `mauricio`: the dotfiles are already at `~/dotfiles` (that's what
-   `/mnt/home/mauricio/dotfiles` became), Hyprland/noctalia/etc. are already live via Home Manager. Add an
+   `/mnt/home/mauricio/dotfiles` became), Hyprland/etc. are already live via Home Manager. Add an
    SSH key and switch the remote:
 
    ```bash

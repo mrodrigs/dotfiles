@@ -20,7 +20,7 @@
     type = "fcitx5";
   };
 
-  # hypr/autostart.conf starts fcitx5/hypridle/noctalia itself via
+  # hypr/autostart.conf starts fcitx5/hypridle itself via
   # exec-once, but the audio stack and the polkit agent need real services.
   security.rtkit.enable = true;
   services.pipewire = {
@@ -59,7 +59,7 @@
     enable = true;
     loginShellInit = ''
       if uwsm check may-start
-        exec systemd-cat -t uwsm_start uwsm start -- Hyprland
+        exec systemd-cat -t uwsm_start uwsm start -- start-hyprland
       end
     '';
   };

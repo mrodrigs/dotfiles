@@ -18,7 +18,7 @@ PROC_NAME=$(ps -p "$FOCUSED_PID" -o comm= 2>/dev/null || echo "desconhecido")
 # Envia SIGKILL para toda a árvore de processos (processo pai + filhos)
 kill -9 "$FOCUSED_PID" 2>/dev/null
 
-# Notificação visual (requer libnotify + um daemon de notificações rodando, ex: noctalia)
+# Notificação visual (requer libnotify + um daemon de notificações rodando)
 notify-send "⚡ Processo eliminado" "PID $FOCUSED_PID ($PROC_NAME) foi morto." \
     --urgency=normal \
     --expire-time=2000

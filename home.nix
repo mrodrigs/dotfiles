@@ -25,10 +25,6 @@ in
     xdg-terminal-exec
   ];
 
-  # Package + ~/.config/noctalia come from the home-manager module (see flake.nix);
-  # launched via hypr/autostart.conf like the other bar/launcher/notification daemons.
-  programs.noctalia.enable = true;
-
   home.file = {
     ".config/hypr".source = link "hypr/.config/hypr";
     ".config/nvim".source = link "nvim/.config/nvim";

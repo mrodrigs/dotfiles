@@ -15,6 +15,7 @@ in
     gcc
     tmux
     ghostty
+    chromium
     # Used directly by hypr/scripts/*.sh and hypr/{autostart,hypridle}.conf —
     # not pulled in by `programs.hyprland.enable`.
     jq

@@ -50,7 +50,7 @@
   # hypr/xdph.conf configures the screenshare picker — needs the portal itself.
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
   };
   programs.fish = {
     enable = true;

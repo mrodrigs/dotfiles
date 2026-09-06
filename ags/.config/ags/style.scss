@@ -1,5 +1,5 @@
 $fg-color: #f5f5f5;
-$bg-color: rgba(20, 20, 20, 0.55);
+$bg-color: rgba(20, 20, 20, 0.9);
 $accent-color: #ffffff;
 
 window.Bar {
@@ -17,8 +17,9 @@ window.Bar {
       min-width: 18px;
       min-height: 18px;
       padding: 0;
-      border-radius: 4px;
-      opacity: 0.5;
+      border-radius: 20px;
+      opacity: 0.9;
+      border: 0;
 
       &.focused {
         opacity: 1;

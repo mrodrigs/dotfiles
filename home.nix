@@ -13,9 +13,17 @@ in
   home.homeDirectory = "/home/mauricio";
   home.stateVersion = "26.05";
 
+  home.pointerCursor = {
+    enable = true;
+    gtk.enable = true;
+    package = pkgs.catppuccin-cursors.mochaPink;
+    name = "catppuccin-mocha-pink-cursors";
+    size = 24;
+  };
+
   programs.ags = {
     enable = true;
-    extraPackages = with astal.packages.${pkgs.system}; [ io astal4 ];
+    extraPackages = with astal.packages.${pkgs.stdenv.hostPlatform.system}; [ io astal4 ];
   };
 
   home.packages = with pkgs; [
@@ -49,7 +57,6 @@ in
     ".config/tmux/tmux.conf".source = link "tmux/.config/tmux/tmux.conf";
     "dev/tmux-statusbar".source = link "tmux/dev/tmux-statusbar";
     ".config/ghostty/config".source = link "ghostty/.config/ghostty/config";
-    ".config/fish".source = link "fish/.config/fish";
     ".config/git".source = link "git/.config/git";
     ".XCompose".source = link "xcompose/.XCompose";
   };

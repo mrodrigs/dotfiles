@@ -44,7 +44,9 @@ in
 
   programs.ags = {
     enable = true;
-    extraPackages = with astal.packages.${pkgs.stdenv.hostPlatform.system}; [ io astal4 ];
+    extraPackages = with astal.packages.${pkgs.stdenv.hostPlatform.system}; [ io astal4 hyprland ];
+    configDir = link "ags/.config/ags";
+    systemd.enable = true;
   };
 
   home.packages = with pkgs; [

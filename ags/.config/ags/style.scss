@@ -1,0 +1,35 @@
+$fg-color: #{"@theme_fg_color"};
+$bg-color: #{"@theme_bg_color"};
+$accent-color: #{"@theme_selected_bg_color"};
+
+window.Bar {
+  background: transparent;
+  color: $fg-color;
+
+  > centerbox {
+    background: $bg-color;
+    margin: 6px 10px;
+    border-radius: 10px;
+    padding: 2px 10px;
+  }
+
+  .workspaces {
+    button {
+      min-width: 24px;
+      min-height: 24px;
+      padding: 0;
+      border-radius: 6px;
+      opacity: 0.5;
+
+      &.focused {
+        opacity: 1;
+        background: $accent-color;
+      }
+    }
+  }
+
+  .clock {
+    font-weight: bold;
+    font-family: monospace;
+  }
+}

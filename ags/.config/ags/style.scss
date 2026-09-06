@@ -1,6 +1,7 @@
 $fg-color: #f5f5f5;
 $bg-color: rgba(20, 20, 20, 0.9);
 $accent-color: #ffffff;
+$accent-pink: #ee5396;
 
 window.Bar {
   background: $bg-color;
@@ -33,5 +34,54 @@ window.Bar {
     font-weight: bold;
     font-family: monospace;
     font-size: 11px;
+  }
+}
+
+window.Launcher {
+  background: transparent;
+
+  .launcher-box {
+    background: rgba(20, 20, 20, 0.96);
+    color: $fg-color;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    padding: 10px;
+    min-width: 480px;
+  }
+
+  .search {
+    background: rgba(255, 255, 255, 0.06);
+    color: $fg-color;
+    caret-color: $fg-color;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+
+    &:focus {
+      border-color: $accent-color;
+    }
+  }
+
+  .empty {
+    padding: 16px;
+    opacity: 0.6;
+  }
+
+  .row {
+    background: transparent;
+    color: $fg-color;
+    border: 0;
+    border-radius: 6px;
+    padding: 6px 8px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    &.selected {
+      background: rgba(238, 83, 150, 0.16);
+      border-left: 2px solid $accent-pink;
+    }
   }
 }

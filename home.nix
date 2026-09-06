@@ -69,6 +69,7 @@ in
     jq
     hyprlock
     hypridle
+    hyprpaper
     hyprshot
     grim
     brightnessctl

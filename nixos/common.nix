@@ -9,6 +9,15 @@
 
   nixpkgs.config.allowUnfree = true;
 
+  fonts = {
+    packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
+    fontconfig.defaultFonts = {
+      serif = [ "JetBrainsMono Nerd Font" ];
+      sansSerif = [ "JetBrainsMono Nerd Font" ];
+      monospace = [ "JetBrainsMono Nerd Font Mono" ];
+    };
+  };
+
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.inputMethod = {

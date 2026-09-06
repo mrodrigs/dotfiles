@@ -27,6 +27,7 @@ in
       name = "Adwaita-dark";
       package = pkgs.gnome-themes-extra;
     };
+    font.name = "JetBrainsMono Nerd Font 10";
     gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = true;
   };
@@ -48,6 +49,10 @@ in
     configDir = link "ags/.config/ags";
     systemd.enable = true;
   };
+
+  systemd.user.services.ags.Unit.After = [ "graphical-session.target" ];
+
+  fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
     neovim

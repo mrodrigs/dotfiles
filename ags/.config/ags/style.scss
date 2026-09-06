@@ -1,11 +1,8 @@
-$fg-color: #f5f5f5;
-$bg-color: rgba(20, 20, 20, 0.9);
-$accent-color: #ffffff;
-$accent-pink: #ee5396;
+@use "./theme" as *;
 
 window.Bar {
-  background: $bg-color;
-  color: $fg-color;
+  @include glass($radius: 0);
+  color: $color-fg;
   font-size: 11px;
 
   > centerbox {
@@ -18,21 +15,21 @@ window.Bar {
       min-width: 18px;
       min-height: 18px;
       padding: 0;
-      border-radius: 20px;
+      border-radius: $radius-pill;
       opacity: 0.9;
       border: 0;
 
       &.focused {
         opacity: 1;
-        background: $accent-color;
-        color: #000000;
+        background: $color-accent;
+        color: $color-bg;
       }
     }
   }
 
   .clock {
     font-weight: bold;
-    font-family: monospace;
+    font-family: $font-mono;
     font-size: 11px;
   }
 }
@@ -41,47 +38,45 @@ window.Launcher {
   background: transparent;
 
   .launcher-box {
-    background: rgba(20, 20, 20, 0.96);
-    color: $fg-color;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
-    padding: 10px;
+    @include glass();
+    color: $color-fg;
+    padding: $space-md;
     min-width: 480px;
   }
 
   .search {
-    background: rgba(255, 255, 255, 0.06);
-    color: $fg-color;
-    caret-color: $fg-color;
+    background: $color-surface-elevated;
+    color: $color-fg;
+    caret-color: $color-fg;
     border: 1px solid transparent;
-    border-radius: 6px;
-    padding: 8px 10px;
+    border-radius: $radius-sm;
+    padding: $space-sm $space-md;
     font-size: 13px;
 
     &:focus {
-      border-color: $accent-color;
+      border-color: $color-accent;
     }
   }
 
   .empty {
-    padding: 16px;
-    opacity: 0.6;
+    padding: $space-lg;
+    color: $color-fg-muted;
   }
 
   .row {
     background: transparent;
-    color: $fg-color;
+    color: $color-fg;
     border: 0;
-    border-radius: 6px;
-    padding: 6px 8px;
+    border-radius: $radius-sm;
+    padding: $space-sm;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.06);
+      background: $color-surface-elevated;
     }
 
     &.selected {
-      background: rgba(238, 83, 150, 0.16);
-      border-left: 2px solid $accent-pink;
+      background: rgba($oc-magenta, 0.16);
+      border-left: 2px solid $color-accent-magenta;
     }
   }
 }

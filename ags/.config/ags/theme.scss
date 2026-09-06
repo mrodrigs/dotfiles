@@ -1,0 +1,49 @@
+$oc-bg: #161616;
+$oc-bg1: #262626;
+$oc-bg2: #393939;
+$oc-bg3: #525252;
+$oc-fg-muted: #dde1e6;
+$oc-fg: #f2f4f8;
+$oc-fg-bright: #ffffff;
+$oc-teal: #08bdba;
+$oc-cyan-bright: #3ddbd9;
+$oc-blue: #78a9ff;
+$oc-magenta: #ee5396;
+$oc-cyan: #33b1ff;
+$oc-red: #ff7eb6;
+$oc-green: #42be65;
+$oc-purple: #be95ff;
+$oc-blue-light: #82cfff;
+
+$color-bg: $oc-bg;
+$color-surface: rgba($oc-bg, 0.85);
+$color-surface-elevated: rgba($oc-bg2, 0.6);
+$color-fg: $oc-fg;
+$color-fg-muted: rgba($oc-fg, 0.6);
+$color-fg-bright: $oc-fg-bright;
+$color-border: rgba($oc-fg, 0.08);
+$color-border-strong: rgba($oc-fg, 0.16);
+
+$color-accent: $oc-fg-bright;
+$color-accent-magenta: $oc-magenta;
+$color-accent-cyan: $oc-cyan;
+$color-accent-green: $oc-green;
+$color-accent-purple: $oc-purple;
+$color-danger: $oc-red;
+
+$radius-sm: 6px;
+$radius-md: 10px;
+$radius-pill: 999px;
+
+$space-xs: 4px;
+$space-sm: 8px;
+$space-md: 12px;
+$space-lg: 16px;
+
+$font-mono: "JetBrainsMono Nerd Font", monospace;
+
+@mixin glass($bg: $color-surface, $border: $color-border, $radius: $radius-md) {
+  background: $bg;
+  border: 1px solid $border;
+  border-radius: $radius;
+}

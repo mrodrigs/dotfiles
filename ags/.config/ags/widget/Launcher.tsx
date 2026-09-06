@@ -35,7 +35,7 @@ export default function Launcher() {
     <window
       $={(self) => (win = self)}
       name="launcher"
-      namespace="launcher"
+      namespace="ags-launcher"
       class="Launcher"
       application={app}
       layer={Astal.Layer.OVERLAY}

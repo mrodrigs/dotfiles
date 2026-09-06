@@ -67,6 +67,7 @@ in
     jq
     hyprlock
     hypridle
+    hyprshot
     brightnessctl
     libnotify
     xdg-terminal-exec

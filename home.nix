@@ -70,6 +70,7 @@ in
     hyprlock
     hypridle
     hyprshot
+    grim
     brightnessctl
     libnotify
     xdg-terminal-exec

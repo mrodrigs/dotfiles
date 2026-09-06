@@ -1,29 +1,29 @@
-$fg-color: #{"@theme_fg_color"};
-$bg-color: #{"@theme_bg_color"};
-$accent-color: #{"@theme_selected_bg_color"};
+$fg-color: #f5f5f5;
+$bg-color: rgba(20, 20, 20, 0.55);
+$accent-color: #ffffff;
 
 window.Bar {
-  background: transparent;
+  background: $bg-color;
   color: $fg-color;
+  font-size: 11px;
 
   > centerbox {
-    background: $bg-color;
-    margin: 6px 10px;
-    border-radius: 10px;
+    margin: 0;
     padding: 2px 10px;
   }
 
   .workspaces {
     button {
-      min-width: 24px;
-      min-height: 24px;
+      min-width: 18px;
+      min-height: 18px;
       padding: 0;
-      border-radius: 6px;
+      border-radius: 4px;
       opacity: 0.5;
 
       &.focused {
         opacity: 1;
         background: $accent-color;
+        color: #000000;
       }
     }
   }
@@ -31,5 +31,6 @@ window.Bar {
   .clock {
     font-weight: bold;
     font-family: monospace;
+    font-size: 11px;
   }
 }

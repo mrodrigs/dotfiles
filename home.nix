@@ -1,4 +1,4 @@
-{ config, pkgs, astal, ags, ... }:
+{ config, lib, pkgs, astal, ags, ... }:
 
 let
   dotfiles = "${config.home.homeDirectory}/dotfiles";
@@ -74,6 +74,7 @@ in
   };
 
   systemd.user.services.ags.Unit.After = [ "graphical-session.target" ];
+  systemd.user.services.ags.Service.KillMode = lib.mkForce "process";
 
   fonts.fontconfig.enable = true;
 

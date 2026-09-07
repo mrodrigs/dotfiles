@@ -15,21 +15,25 @@ function DeviceRow({
   const volume = createBinding(endpoint, "volume")
   const mute = createBinding(endpoint, "mute")
   const description = createBinding(endpoint, "description")
+  const inUse = createBinding(endpoint, "state")((s) => s === AstalWp.NodeState.RUNNING)
 
   return (
-    <box class="device-row" spacing={8}>
+    <box class="device-row" spacing={8} valign={Gtk.Align.CENTER}>
       <button
         class={isDefault((d) => (d ? "device-name active" : "device-name"))}
         hexpand
         onClicked={() => endpoint.set_is_default(true)}
       >
-        <label
-          label={description}
-          xalign={0}
-          hexpand
-          maxWidthChars={22}
-          ellipsize={Pango.EllipsizeMode.END}
-        />
+        <box spacing={6}>
+          <box class="in-use-dot" visible={inUse} />
+          <label
+            label={description}
+            xalign={0}
+            hexpand
+            maxWidthChars={20}
+            ellipsize={Pango.EllipsizeMode.END}
+          />
+        </box>
       </button>
       <button class="mute-toggle" onClicked={() => endpoint.set_mute(!endpoint.mute)}>
         <image
@@ -83,10 +87,11 @@ export default function AudioButton() {
   const microphones = createBinding(audio, "microphones")
 
   return (
-    <menubutton class="AudioButton">
+    <menubutton class="AudioButton" hasFrame={false} alwaysShowArrow={false}>
       <With value={speaker}>
         {(spk) => (
           <image
+            pixelSize={14}
             iconName={spk ? createBinding(spk, "volumeIcon") : "audio-volume-high-symbolic"}
           />
         )}

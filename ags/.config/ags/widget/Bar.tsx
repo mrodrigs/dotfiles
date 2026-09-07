@@ -7,6 +7,8 @@ import Hyprland from "gi://AstalHyprland"
 import AudioButton from "./Audio"
 import NotificationCenter from "./notifications/NotificationCenter"
 import ClaudeUsage from "./ClaudeUsage"
+import CpuUsage from "./CpuUsage"
+import RamUsage from "./RamUsage"
 
 type Monitor = InstanceType<typeof Hyprland.Monitor>
 
@@ -88,10 +90,16 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
           <label class="clock" label={time} />
           <label class="date" label={date} />
         </box>
-        <box $type="end" class="bar-section bar-section-end" spacing={10}>
-          <ClaudeUsage />
-          <AudioButton />
-          <NotificationCenter />
+        <box $type="end" spacing={8}>
+          <box class="bar-section bar-section-system" spacing={10}>
+            <CpuUsage />
+            <RamUsage />
+          </box>
+          <box class="bar-section bar-section-end" spacing={10}>
+            <ClaudeUsage />
+            <AudioButton />
+            <NotificationCenter />
+          </box>
         </box>
       </centerbox>
     </window>

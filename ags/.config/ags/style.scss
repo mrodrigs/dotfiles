@@ -74,6 +74,22 @@ window.Bar {
     color: $color-fg-muted;
   }
 
+  .CpuUsage,
+  .RamUsage {
+    color: #fff;
+
+    image {
+      color: #fff;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .stat-percent {
+      font-family: $font-mono;
+      font-size: 11px;
+    }
+  }
+
   .ClaudeUsage {
     min-width: 0;
     min-height: 0;

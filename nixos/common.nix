@@ -67,7 +67,7 @@
   programs.fish = {
     enable = true;
     shellAliases = {
-      ags-restart = "systemctl --user restart ags.service";
+      ags-restart = "ags quit; systemctl --user restart ags.service";
     };
     shellFunctions = {
       tm.body = ''

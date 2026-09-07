@@ -25,8 +25,6 @@
     type = "fcitx5";
   };
 
-  # hypr/autostart.conf starts fcitx5/hypridle itself via
-  # exec-once, but the audio stack and the polkit agent need real services.
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -59,7 +57,6 @@
   };
   programs.steam.enable = true;
 
-  # hypr/xdph.conf configures the screenshare picker — needs the portal itself.
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk ];
@@ -68,32 +65,54 @@
     enable = true;
     shellAliases = {
       ags-restart = "ags quit; systemctl --user restart ags.service";
+      tl = "tmux list-sessions";
     };
     shellFunctions = {
-      tm.body = ''
-        if tmux has-session 2>/dev/null
-          tmux attach
-          return
-        end
-
-        if test -e ~/.local/share/tmux/resurrect/last
-          for i in (seq 1 15)
-            sleep 0.2
-            if tmux has-session 2>/dev/null
-              tmux attach
-              return
+      tmux.body = ''
+        if test (count $argv) -gt 0
+          command tmux $argv
+            return
             end
-          end
-        end
 
-        tmux new-session -s main
-      '';
+            if command tmux has-session 2>/dev/null
+              command tmux attach
+                return
+                end
+
+                if test -e ~/.local/share/tmux/resurrect/last
+                  for i in (seq 1 15)
+                    sleep 0.2
+                      if command tmux has-session 2>/dev/null
+                        command tmux attach
+                          return
+                          end
+                          end
+                          end
+
+                          command tmux new-session -s main
+                          '';
+      ta.body = ''
+        tmux attach -t $argv[1]
+        '';
+      tk.body = ''
+        tmux kill-session -t $argv[1]
+        '';
+      ts.body = ''
+        tmux new-session -s $argv[1]
+        '';
     };
     loginShellInit = ''
-      if uwsm check may-start
+      if uwsm check may-start >/dev/null 2>&1
         exec systemd-cat -t uwsm_start uwsm start -- start-hyprland
-      end
-    '';
+          end
+          '';
+    interactiveShellInit = ''
+      set -g fish_greeting
+      set -U tide_pwd_bg_color 525252
+      set -U tide_pwd_color_dirs f2f4f8
+      set -U tide_pwd_color_truncated_dirs f2f4f8
+      set -U tide_pwd_color_anchors f2f4f8
+      '';
   };
 
   users.users.mauricio = {

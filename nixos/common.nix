@@ -66,6 +66,26 @@
   };
   programs.fish = {
     enable = true;
+    shellFunctions = {
+      tm.body = ''
+        if tmux has-session 2>/dev/null
+          tmux attach
+          return
+        end
+
+        if test -e ~/.local/share/tmux/resurrect/last
+          for i in (seq 1 15)
+            sleep 0.2
+            if tmux has-session 2>/dev/null
+              tmux attach
+              return
+            end
+          end
+        end
+
+        tmux new-session -s main
+      '';
+    };
     loginShellInit = ''
       if uwsm check may-start
         exec systemd-cat -t uwsm_start uwsm start -- start-hyprland

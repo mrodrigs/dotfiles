@@ -611,3 +611,30 @@ window.ClipboardHistory {
     @include center-menu(420px);
   }
 }
+
+window.PowerMenu {
+  background: transparent;
+
+  .power-menu-box {
+    @include glass();
+    color: $color-fg;
+    padding: $space-lg;
+  }
+
+  .power-menu-row {
+    background: transparent;
+    color: $color-fg;
+    border: 0;
+    border-radius: $radius-sm;
+    padding: $space-lg $space-lg * 1.5;
+
+    &:hover {
+      background: $color-surface-elevated;
+    }
+
+    &.selected {
+      background: rgba($oc-magenta, 0.16);
+      border: 1px solid $color-accent-magenta;
+    }
+  }
+}

@@ -3,6 +3,7 @@ import style from "./style.scss"
 import Bar from "./widget/Bar"
 import Launcher from "./widget/Launcher"
 import ClipboardHistory from "./widget/ClipboardHistory"
+import PowerMenu from "./widget/PowerMenu"
 import Popups from "./widget/notifications/Popups"
 
 app.start({
@@ -13,6 +14,7 @@ app.start({
     monitors.map(Bar)
     Launcher()
     ClipboardHistory()
+    PowerMenu()
     if (monitors[0]) Popups(monitors[0])
   },
 })

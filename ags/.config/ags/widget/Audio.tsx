@@ -90,10 +90,16 @@ export default function AudioButton() {
     <menubutton class="AudioButton" hasFrame={false} alwaysShowArrow={false}>
       <With value={speaker}>
         {(spk) => (
-          <image
-            pixelSize={14}
-            iconName={spk ? createBinding(spk, "volumeIcon") : "audio-volume-high-symbolic"}
-          />
+          <box spacing={4}>
+            <image
+              pixelSize={14}
+              iconName={spk ? createBinding(spk, "volumeIcon") : "audio-volume-high-symbolic"}
+            />
+            <label
+              class="volume-percent"
+              label={spk ? createBinding(spk, "volume")((v) => `${Math.round(v * 100)}%`) : "0%"}
+            />
+          </box>
         )}
       </With>
       <popover class="AudioPopover">

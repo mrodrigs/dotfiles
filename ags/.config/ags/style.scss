@@ -11,6 +11,24 @@ window.Bar {
   }
 
   .workspaces {
+    .workspace-group {
+      padding: 2px 5px;
+      border-radius: $radius-pill;
+      background: $color-surface-elevated;
+      border: 1px solid transparent;
+
+      &.focused {
+        border-color: $color-border-strong;
+      }
+    }
+
+    .workspace-divider {
+      min-width: 1px;
+      min-height: 12px;
+      margin-right: 6px;
+      background: $color-border-strong;
+    }
+
     button {
       min-width: 18px;
       min-height: 18px;
@@ -18,6 +36,7 @@ window.Bar {
       border-radius: $radius-pill;
       opacity: 0.9;
       border: 0;
+      background: transparent;
 
       &.focused {
         opacity: 1;

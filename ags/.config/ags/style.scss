@@ -33,6 +33,12 @@ window.Bar {
     font-size: 11px;
   }
 
+  .date {
+    font-family: $font-mono;
+    font-size: 11px;
+    color: $color-fg-muted;
+  }
+
   .AudioButton {
     min-width: 0;
     min-height: 0;

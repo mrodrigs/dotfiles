@@ -15,6 +15,10 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
     GLib.DateTime.new_now_local().format("%H:%M:%S")!,
   )
 
+  const date = createPoll("", 60000, () =>
+    GLib.DateTime.new_now_local().format("%a, %B %-e")!,
+  )
+
   const { TOP, LEFT, RIGHT } = Astal.WindowAnchor
 
   return (
@@ -41,7 +45,10 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
             )}
           </For>
         </box>
-        <label $type="center" class="clock" label={time} />
+        <box $type="center" spacing={6}>
+          <label class="clock" label={time} />
+          <label class="date" label={date} />
+        </box>
         <box $type="end">
           <AudioButton />
         </box>

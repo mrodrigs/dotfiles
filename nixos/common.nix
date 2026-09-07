@@ -104,5 +104,6 @@
 
   environment.systemPackages = with pkgs; [
     git
+    fishPlugins.tide
   ];
 }

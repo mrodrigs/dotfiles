@@ -62,6 +62,17 @@ window.Bar {
     }
   }
 
+  .bar-section-visualizer {
+    padding: 2px 8px;
+  }
+
+  .AudioVisualizer {
+    .visualizer-bar {
+      min-width: 5px;
+      border-radius: $radius-pill;
+    }
+  }
+
   .clock {
     font-weight: bold;
     font-family: $font-mono;

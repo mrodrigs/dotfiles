@@ -11,6 +11,7 @@ import NetworkButton from "./Network"
 import BluetoothButton from "./Bluetooth"
 import CpuUsage from "./CpuUsage"
 import RamUsage from "./RamUsage"
+import AudioVisualizer from "./AudioVisualizer"
 
 type Monitor = InstanceType<typeof Hyprland.Monitor>
 
@@ -60,33 +61,38 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       application={app}
     >
       <centerbox cssName="centerbox">
-        <box $type="start" class="bar-section bar-section-start workspaces" spacing={6}>
-          <For each={monitorIds} id={(id) => id}>
-            {(monitorId, index) => (
-              <box spacing={0}>
-                <With value={index((i) => i > 0)}>
-                  {(showDivider) => (showDivider ? <box class="workspace-divider" /> : null)}
-                </With>
-                <box
-                  class={focusedMonitorId((id) =>
-                    id === monitorId ? "workspace-group focused" : "workspace-group",
-                  )}
-                  spacing={4}
-                >
-                  <For each={workspacesFor(monitorId)} id={(ws) => ws.id}>
-                    {(ws) => (
-                      <button
-                        class={focusedId((id) => (id === ws.id ? "workspace focused" : "workspace"))}
-                        onClicked={() => ws.focus()}
-                      >
-                        <label label={String(ws.id)} />
-                      </button>
+        <box $type="start" spacing={8}>
+          <box class="bar-section bar-section-start workspaces" spacing={6}>
+            <For each={monitorIds} id={(id) => id}>
+              {(monitorId, index) => (
+                <box spacing={0}>
+                  <With value={index((i) => i > 0)}>
+                    {(showDivider) => (showDivider ? <box class="workspace-divider" /> : null)}
+                  </With>
+                  <box
+                    class={focusedMonitorId((id) =>
+                      id === monitorId ? "workspace-group focused" : "workspace-group",
                     )}
-                  </For>
+                    spacing={4}
+                  >
+                    <For each={workspacesFor(monitorId)} id={(ws) => ws.id}>
+                      {(ws) => (
+                        <button
+                          class={focusedId((id) => (id === ws.id ? "workspace focused" : "workspace"))}
+                          onClicked={() => ws.focus()}
+                        >
+                          <label label={String(ws.id)} />
+                        </button>
+                      )}
+                    </For>
+                  </box>
                 </box>
-              </box>
-            )}
-          </For>
+              )}
+            </For>
+          </box>
+          <box class="bar-section bar-section-visualizer">
+            <AudioVisualizer />
+          </box>
         </box>
         <box $type="center" class="bar-section bar-section-center" spacing={6}>
           <label class="clock" label={time} />
@@ -96,9 +102,9 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
           <box class="bar-section bar-section-system" spacing={10}>
             <CpuUsage />
             <RamUsage />
+            <ClaudeUsage />
           </box>
           <box class="bar-section bar-section-end" spacing={10}>
-            <ClaudeUsage />
             <NetworkButton />
             <BluetoothButton />
             <AudioButton />

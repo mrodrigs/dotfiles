@@ -28,8 +28,11 @@ in
       package = pkgs.gnome-themes-extra;
     };
     font.name = "JetBrainsMono Nerd Font 10";
-    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
     gtk4.extraConfig.gtk-application-prefer-dark-theme = true;
+    gtk3.extraCss = ''
+      @define-color theme_selected_bg_color #ee5396;
+      @define-color theme_selected_fg_color #161616;
+    '';
   };
 
   qt = {
@@ -41,6 +44,26 @@ in
   dconf.settings."org/gnome/desktop/interface" = {
     color-scheme = "prefer-dark";
     gtk-theme = "Adwaita-dark";
+  };
+
+  xdg.desktopEntries.thunar = {
+    name = "Thunar File Manager";
+    icon = "org.xfce.thunar";
+    exec = "env GTK_THEME=oxocarbon-ags thunar %U";
+    terminal = false;
+    type = "Application";
+    categories = [ "System" "Core" "GTK" "FileTools" "FileManager" ];
+    mimeType = [ "inode/directory" ];
+  };
+
+  xdg.desktopEntries.pxg = {
+    name = "PXG";
+    genericName = "PokeXGames";
+    icon = "${config.home.homeDirectory}/pxg/assets/pxgmeclient.png";
+    exec = "env --chdir=${config.home.homeDirectory}/pxg steam-run ${config.home.homeDirectory}/pxg/pxgme-linux";
+    terminal = false;
+    type = "Application";
+    categories = [ "Game" ];
   };
 
   programs.ags = {
@@ -69,6 +92,9 @@ in
     btop
     obs-studio
     zapzap
+    xfce.thunar
+    xfce.thunar-volman
+    xfce.tumbler
     # Used directly by hypr/scripts/*.sh and hypr/{autostart,hypridle}.conf —
     # not pulled in by `programs.hyprland.enable`.
     jq
@@ -77,6 +103,7 @@ in
     hyprpaper
     hyprshot
     grim
+    wl-clipboard
     brightnessctl
     libnotify
     xdg-terminal-exec
@@ -89,6 +116,7 @@ in
     "dev/tmux-statusbar".source = link "tmux/dev/tmux-statusbar";
     ".config/ghostty/config".source = link "ghostty/.config/ghostty/config";
     ".config/git".source = link "git/.config/git";
+    ".themes/oxocarbon-ags".source = link "gtk/.themes/oxocarbon-ags";
     ".XCompose".source = link "xcompose/.XCompose";
   };
 }

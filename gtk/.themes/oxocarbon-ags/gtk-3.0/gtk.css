@@ -1,0 +1,106 @@
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+
+@define-color oc_bg #161616;
+@define-color oc_bg1 #262626;
+@define-color oc_bg2 #393939;
+@define-color oc_fg #f2f4f8;
+@define-color oc_fg_muted #dde1e6;
+@define-color oc_border rgba(242, 244, 248, 0.08);
+@define-color oc_accent #ee5396;
+
+@define-color theme_selected_bg_color @oc_accent;
+@define-color theme_selected_fg_color @oc_bg;
+@define-color theme_bg_color @oc_bg;
+@define-color theme_fg_color @oc_fg;
+
+window,
+.background {
+  background-color: @oc_bg;
+  color: @oc_fg;
+}
+
+headerbar,
+.titlebar,
+menubar,
+toolbar {
+  background-color: @oc_bg1;
+  background-image: none;
+  color: @oc_fg;
+  border-color: @oc_border;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+.sidebar,
+placessidebar,
+treeview.sidebar {
+  background-color: @oc_bg;
+  color: @oc_fg;
+  border-color: @oc_border;
+}
+
+treeview,
+iconview,
+.view {
+  background-color: @oc_bg;
+  color: @oc_fg;
+}
+
+treeview:selected,
+iconview:selected,
+.view:selected,
+row:selected {
+  background-color: @oc_accent;
+  color: @oc_bg;
+  border-radius: 4px;
+}
+
+entry {
+  background-color: @oc_bg2;
+  color: @oc_fg;
+  border-color: @oc_border;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+entry:focus {
+  border-color: @oc_accent;
+}
+
+button {
+  background-color: transparent;
+  background-image: none;
+  border-color: transparent;
+  color: @oc_fg;
+  box-shadow: none;
+}
+
+button:hover {
+  background-color: rgba(242, 244, 248, 0.08);
+}
+
+button:checked,
+button:active {
+  background-color: rgba(238, 83, 150, 0.16);
+  color: @oc_fg;
+}
+
+statusbar {
+  background-color: @oc_bg1;
+  color: @oc_fg_muted;
+  border-color: @oc_border;
+}
+
+paned > separator,
+separator {
+  background-color: @oc_border;
+}
+
+scrollbar slider {
+  background-color: rgba(242, 244, 248, 0.2);
+  border-radius: 999px;
+}
+
+scrollbar slider:hover {
+  background-color: rgba(242, 244, 248, 0.35);
+}

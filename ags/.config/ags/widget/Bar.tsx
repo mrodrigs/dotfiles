@@ -34,7 +34,11 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
     >
       <centerbox cssName="centerbox">
         <box $type="start" class="workspaces" spacing={4}>
-          <For each={workspaces((list) => [...list].sort((a, b) => a.id - b.id))}>
+          <For
+            each={workspaces((list) =>
+              [...list].filter((ws) => ws.id > 0).sort((a, b) => a.id - b.id),
+            )}
+          >
             {(ws) => (
               <button
                 class={focusedId((id) => (id === ws.id ? "workspace focused" : "workspace"))}

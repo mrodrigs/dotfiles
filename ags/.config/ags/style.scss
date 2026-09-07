@@ -39,6 +39,44 @@ window.Bar {
     color: $color-fg-muted;
   }
 
+  .ClaudeUsage {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+
+    button {
+      min-width: 0;
+      min-height: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      background-image: none;
+      border: 0;
+      box-shadow: none;
+      outline: none;
+
+      &:hover,
+      &:active,
+      &:checked {
+        background: transparent;
+        box-shadow: none;
+      }
+    }
+
+    image {
+      color: #fff;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    .usage-percent {
+      font-family: $font-mono;
+      font-size: 11px;
+    }
+  }
+
   .AudioButton {
     min-width: 0;
     min-height: 0;
@@ -130,6 +168,39 @@ popover.AudioPopover {
 
   .volume-slider {
     min-width: 120px;
+  }
+}
+
+popover.ClaudeUsagePopover {
+  > contents {
+    @include glass();
+    padding: $space-md;
+  }
+
+  .claude-usage-popover {
+    min-width: 220px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: $color-fg-muted;
+  }
+
+  .usage-label {
+    font-family: $font-mono;
+    font-size: 11px;
+  }
+
+  .usage-value {
+    font-family: $font-mono;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .usage-meta {
+    font-size: 10px;
+    color: $color-fg-muted;
   }
 }
 

@@ -6,6 +6,7 @@ import GLib from "gi://GLib"
 import Hyprland from "gi://AstalHyprland"
 import AudioButton from "./Audio"
 import NotificationCenter from "./notifications/NotificationCenter"
+import ClaudeUsage from "./ClaudeUsage"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   const hypr = Hyprland.get_default()
@@ -54,7 +55,8 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
           <label class="clock" label={time} />
           <label class="date" label={date} />
         </box>
-        <box $type="end" spacing={4}>
+        <box $type="end" spacing={10}>
+          <ClaudeUsage />
           <AudioButton />
           <NotificationCenter />
         </box>

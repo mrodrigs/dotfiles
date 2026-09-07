@@ -56,6 +56,7 @@
     withUWSM = true;
   };
   programs.steam.enable = true;
+  programs.nix-ld.enable = true;
 
   xdg.portal = {
     enable = true;

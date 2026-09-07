@@ -1,9 +1,16 @@
 import { Gtk } from "ags/gtk4"
-import { createBinding, For, With, type Accessor } from "ags"
+import { createBinding, createComputed, For, With, type Accessor } from "ags"
 import AstalWp from "gi://AstalWp"
 import Pango from "gi://Pango"
 
 type Endpoint = InstanceType<typeof AstalWp.Endpoint>
+
+function volumeIconName(muted: boolean, volume: number) {
+  if (muted || volume <= 0) return "sound-muted-symbolic"
+  if (volume < 0.33) return "sound-low-symbolic"
+  if (volume < 0.66) return "sound-medium-symbolic"
+  return "sound-high-symbolic"
+}
 
 function DeviceRow({
   endpoint,
@@ -36,11 +43,7 @@ function DeviceRow({
         </box>
       </button>
       <button class="mute-toggle" onClicked={() => endpoint.set_mute(!endpoint.mute)}>
-        <image
-          iconName={mute((m) =>
-            m ? "audio-volume-muted-symbolic" : "audio-volume-high-symbolic",
-          )}
-        />
+        <image iconName={mute((m) => (m ? "sound-muted-symbolic" : "sound-high-symbolic"))} />
       </button>
       <slider
         class="volume-slider"
@@ -89,18 +92,27 @@ export default function AudioButton() {
   return (
     <menubutton class="AudioButton" hasFrame={false} alwaysShowArrow={false}>
       <With value={speaker}>
-        {(spk) => (
-          <box spacing={4}>
-            <image
-              pixelSize={14}
-              iconName={spk ? createBinding(spk, "volumeIcon") : "audio-volume-high-symbolic"}
-            />
-            <label
-              class="volume-percent"
-              label={spk ? createBinding(spk, "volume")((v) => `${Math.round(v * 100)}%`) : "0%"}
-            />
-          </box>
-        )}
+        {(spk) => {
+          if (!spk) {
+            return (
+              <box spacing={4}>
+                <image pixelSize={14} iconName="sound-muted-symbolic" />
+                <label class="volume-percent" label="0%" />
+              </box>
+            )
+          }
+
+          const volume = createBinding(spk, "volume")
+          const mute = createBinding(spk, "mute")
+          const icon = createComputed(() => volumeIconName(mute(), volume()))
+
+          return (
+            <box spacing={4}>
+              <image pixelSize={14} iconName={icon} />
+              <label class="volume-percent" label={volume((v) => `${Math.round(v * 100)}%`)} />
+            </box>
+          )
+        }}
       </With>
       <popover class="AudioPopover">
         <box orientation={Gtk.Orientation.VERTICAL} class="audio-popover" spacing={12}>

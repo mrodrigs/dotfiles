@@ -383,49 +383,67 @@ window.Popups {
   background: transparent;
 }
 
+// Shared "center menu" popup — every SUPER-triggered overlay picker (app
+// launcher, clipboard history, and anything added later) composes from these
+// classes so they all share one look, feel and palette. Add a new picker by
+// reusing .menu-search/.menu-empty/.menu-row rather than inventing new rules.
+.menu-search {
+  background: $color-surface-elevated;
+  color: $color-fg;
+  caret-color: $color-fg;
+  border: 1px solid transparent;
+  border-radius: $radius-sm;
+  padding: $space-sm $space-md;
+  font-size: 13px;
+
+  &:focus {
+    border-color: $color-accent;
+  }
+}
+
+.menu-empty {
+  padding: $space-lg;
+  color: $color-fg-muted;
+}
+
+.menu-row {
+  background: transparent;
+  color: $color-fg;
+  border: 0;
+  border-radius: $radius-sm;
+  padding: $space-sm;
+
+  &:hover {
+    background: $color-surface-elevated;
+  }
+
+  &.selected {
+    background: rgba($oc-magenta, 0.16);
+    border-left: 2px solid $color-accent-magenta;
+  }
+
+  image {
+    border-radius: $radius-sm;
+  }
+
+  .menu-row-time {
+    font-size: 10px;
+    color: $color-fg-muted;
+  }
+}
+
 window.Launcher {
   background: transparent;
 
   .launcher-box {
-    @include glass();
-    color: $color-fg;
-    padding: $space-md;
-    min-width: 480px;
+    @include center-menu(480px);
   }
+}
 
-  .search {
-    background: $color-surface-elevated;
-    color: $color-fg;
-    caret-color: $color-fg;
-    border: 1px solid transparent;
-    border-radius: $radius-sm;
-    padding: $space-sm $space-md;
-    font-size: 13px;
+window.ClipboardHistory {
+  background: transparent;
 
-    &:focus {
-      border-color: $color-accent;
-    }
-  }
-
-  .empty {
-    padding: $space-lg;
-    color: $color-fg-muted;
-  }
-
-  .row {
-    background: transparent;
-    color: $color-fg;
-    border: 0;
-    border-radius: $radius-sm;
-    padding: $space-sm;
-
-    &:hover {
-      background: $color-surface-elevated;
-    }
-
-    &.selected {
-      background: rgba($oc-magenta, 0.16);
-      border-left: 2px solid $color-accent-magenta;
-    }
+  .clipboard-history-box {
+    @include center-menu(420px);
   }
 }

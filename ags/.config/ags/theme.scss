@@ -47,3 +47,12 @@ $font-mono: "JetBrainsMono Nerd Font", monospace;
   border: 1px solid $border;
   border-radius: $radius;
 }
+
+// Shared shell for every SUPER-triggered center popup (Launcher, ClipboardHistory,
+// future pickers) — see the ags-astal skill's "center menu" convention.
+@mixin center-menu($min-width: 480px) {
+  @include glass();
+  color: $color-fg;
+  padding: $space-md;
+  min-width: $min-width;
+}

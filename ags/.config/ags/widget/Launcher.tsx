@@ -69,7 +69,7 @@ export default function Launcher() {
       <box class="launcher-box" orientation={Gtk.Orientation.VERTICAL} spacing={8}>
         <entry
           $={(self) => (entry = self)}
-          class="search"
+          class="menu-search"
           placeholderText="Pesquisar apps..."
           onNotifyText={(self) => {
             setQuery(self.text)
@@ -80,7 +80,7 @@ export default function Launcher() {
         <With value={isEmpty}>
           {(empty) =>
             empty ? (
-              <label class="empty" label="Nenhum app encontrado" />
+              <label class="menu-empty" label="Nenhum app encontrado" />
             ) : (
               <scrolledwindow
                 class="results"
@@ -94,7 +94,7 @@ export default function Launcher() {
                     {(item, index) => (
                       <button
                         class={createComputed(() =>
-                          index() === selected() ? "row selected" : "row",
+                          index() === selected() ? "menu-row selected" : "menu-row",
                         )}
                         onClicked={() => launch(item)}
                       >

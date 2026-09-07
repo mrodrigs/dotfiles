@@ -42,6 +42,8 @@ $space-lg: 16px;
 
 $font-mono: "JetBrainsMono Nerd Font", monospace;
 
+$bar-gap: 8px;
+
 @mixin glass($bg: $color-surface, $border: $color-border, $radius: $radius-md) {
   background: $bg;
   border: 1px solid $border;

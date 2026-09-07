@@ -56,7 +56,7 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
       application={app}
     >
       <centerbox cssName="centerbox">
-        <box $type="start" class="workspaces" spacing={6}>
+        <box $type="start" class="bar-section bar-section-start workspaces" spacing={6}>
           <For each={monitorIds} id={(id) => id}>
             {(monitorId, index) => (
               <box spacing={0}>
@@ -84,11 +84,11 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
             )}
           </For>
         </box>
-        <box $type="center" spacing={6}>
+        <box $type="center" class="bar-section bar-section-center" spacing={6}>
           <label class="clock" label={time} />
           <label class="date" label={date} />
         </box>
-        <box $type="end" spacing={10}>
+        <box $type="end" class="bar-section bar-section-end" spacing={10}>
           <ClaudeUsage />
           <AudioButton />
           <NotificationCenter />

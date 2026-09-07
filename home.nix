@@ -114,7 +114,7 @@ in
     ".config/hypr".source = link "hypr/.config/hypr";
     ".config/nvim".source = link "nvim/.config/nvim";
     ".config/tmux/tmux.conf".source = link "tmux/.config/tmux/tmux.conf";
-    "dev/tmux-statusbar".source = link "tmux/dev/tmux-statusbar";
+    "dev/tmux-dotbar".source = link "tmux/dev/tmux-dotbar";
     ".config/ghostty/config".source = link "ghostty/.config/ghostty/config";
     ".config/git".source = link "git/.config/git";
     ".themes/oxocarbon-ags".source = link "gtk/.themes/oxocarbon-ags";

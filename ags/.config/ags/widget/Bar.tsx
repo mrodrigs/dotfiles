@@ -4,6 +4,7 @@ import { createBinding, For } from "ags"
 import { createPoll } from "ags/time"
 import GLib from "gi://GLib"
 import Hyprland from "gi://AstalHyprland"
+import AudioButton from "./Audio"
 
 export default function Bar(gdkmonitor: Gdk.Monitor) {
   const hypr = Hyprland.get_default()
@@ -41,7 +42,9 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
           </For>
         </box>
         <label $type="center" class="clock" label={time} />
-        <box $type="end" />
+        <box $type="end">
+          <AudioButton />
+        </box>
       </centerbox>
     </window>
   )

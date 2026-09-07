@@ -32,6 +32,67 @@ window.Bar {
     font-family: $font-mono;
     font-size: 11px;
   }
+
+  .AudioButton {
+    min-width: 22px;
+    min-height: 22px;
+    padding: 0 4px;
+    background: transparent;
+    border: 0;
+  }
+}
+
+popover.AudioPopover {
+  > contents {
+    @include glass();
+    padding: $space-md;
+  }
+
+  .audio-popover {
+    min-width: 260px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $color-fg-muted;
+  }
+
+  .device-row {
+    align-items: center;
+  }
+
+  .device-name {
+    background: transparent;
+    color: $color-fg;
+    border: 0;
+    border-radius: $radius-sm;
+    padding: $space-xs $space-sm;
+
+    &:hover {
+      background: $color-surface-elevated;
+    }
+
+    &.active {
+      color: $color-accent-cyan;
+    }
+  }
+
+  .mute-toggle {
+    background: transparent;
+    border: 0;
+    padding: $space-xs;
+    border-radius: $radius-pill;
+
+    &:hover {
+      background: $color-surface-elevated;
+    }
+  }
+
+  .volume-slider {
+    min-width: 120px;
+  }
 }
 
 window.Launcher {

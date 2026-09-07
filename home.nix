@@ -82,6 +82,8 @@ in
     neovim
     lazygit
     gcc
+    ripgrep
+    fd
     tmux
     ghostty
     chromium

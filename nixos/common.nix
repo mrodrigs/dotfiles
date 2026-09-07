@@ -66,6 +66,9 @@
   };
   programs.fish = {
     enable = true;
+    shellAliases = {
+      ags-restart = "systemctl --user restart ags.service";
+    };
     shellFunctions = {
       tm.body = ''
         if tmux has-session 2>/dev/null

@@ -49,7 +49,7 @@ function DeviceRow({ device }: { device: BtDevice }) {
       <box spacing={8}>
         <box class="in-use-dot" visible={connected} />
         <label label={alias} xalign={0} hexpand maxWidthChars={18} ellipsize={Pango.EllipsizeMode.END} />
-        <label class="menu-row-time" label="conectando…" visible={connecting} />
+        <label class="menu-row-time" label="connecting…" visible={connecting} />
       </box>
     </button>
   )
@@ -70,7 +70,7 @@ function AdapterScanButton({ adapter }: { adapter: Adapter }) {
         }
       }}
     >
-      <label label={discovering((d) => (d ? "Buscando…" : "Buscar"))} />
+      <label label={discovering((d) => (d ? "Scanning…" : "Scan"))} />
     </button>
   )
 }
@@ -95,7 +95,7 @@ function BluetoothPanel({ bluetooth }: { bluetooth: Bluetooth }) {
           class={powered((p) => (p ? "power-toggle active" : "power-toggle"))}
           onClicked={() => bluetooth.toggle()}
         >
-          <label label={powered((p) => (p ? "Ativado" : "Desativado"))} />
+          <label label={powered((p) => (p ? "On" : "Off"))} />
         </button>
       </box>
       <With value={powered}>
@@ -105,7 +105,7 @@ function BluetoothPanel({ bluetooth }: { bluetooth: Bluetooth }) {
               <With value={knownDevices}>
                 {(list) =>
                   list.length === 0 ? (
-                    <label class="menu-empty" label="Nenhum dispositivo pareado" />
+                    <label class="menu-empty" label="No paired devices" />
                   ) : null
                 }
               </With>
@@ -114,7 +114,7 @@ function BluetoothPanel({ bluetooth }: { bluetooth: Bluetooth }) {
               </For>
             </box>
           ) : (
-            <label class="menu-empty" label="Bluetooth desativado" />
+            <label class="menu-empty" label="Bluetooth off" />
           )
         }
       </With>

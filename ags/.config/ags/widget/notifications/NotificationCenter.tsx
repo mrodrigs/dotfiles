@@ -38,10 +38,10 @@ export default function NotificationCenter() {
       >
         <box orientation={Gtk.Orientation.VERTICAL} class="notification-popover" spacing={8}>
           <box class="popover-header" spacing={4}>
-            <label class="section-title" label="Notificações" hexpand xalign={0} />
+            <label class="section-title" label="Notifications" hexpand xalign={0} />
             <button
               class={dontDisturb((d) => (d ? "mute-toggle active" : "mute-toggle"))}
-              tooltipText="Silenciar notificações"
+              tooltipText="Mute notifications"
               onClicked={() => setDontDisturb(!dontDisturb.get())}
             >
               <image
@@ -51,14 +51,14 @@ export default function NotificationCenter() {
                 pixelSize={12}
               />
             </button>
-            <button class="clear-all" tooltipText="Limpar tudo" onClicked={() => clearHistory()}>
+            <button class="clear-all" tooltipText="Clear all" onClicked={() => clearHistory()}>
               <image iconName="edit-clear-all-symbolic" pixelSize={12} />
             </button>
           </box>
           <With value={history((list) => list.length === 0)}>
             {(empty) =>
               empty ? (
-                <label class="empty" label="Nenhuma notificação" />
+                <label class="empty" label="No notifications" />
               ) : (
                 <scrolledwindow
                   vscrollbarPolicy={Gtk.PolicyType.AUTOMATIC}

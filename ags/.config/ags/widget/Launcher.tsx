@@ -70,7 +70,7 @@ export default function Launcher() {
         <entry
           $={(self) => (entry = self)}
           class="menu-search"
-          placeholderText="Pesquisar apps..."
+          placeholderText="Search apps..."
           onNotifyText={(self) => {
             setQuery(self.text)
             setSelected(0)
@@ -80,7 +80,7 @@ export default function Launcher() {
         <With value={isEmpty}>
           {(empty) =>
             empty ? (
-              <label class="menu-empty" label="Nenhum app encontrado" />
+              <label class="menu-empty" label="No apps found" />
             ) : (
               <scrolledwindow
                 class="results"

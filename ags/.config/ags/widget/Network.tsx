@@ -51,14 +51,14 @@ function AccessPointRow({ ap, active }: { ap: AccessPoint; active: Accessor<bool
           <entry
             class="menu-search"
             hexpand
-            placeholderText="Senha"
+            placeholderText="Password"
             visibility={false}
             text={password}
             onNotifyText={(self) => setPassword(self.text)}
             onActivate={() => connect(password())}
           />
           <button class="ap-connect" onClicked={() => connect(password())}>
-            <label label="Conectar" />
+            <label label="Connect" />
           </button>
         </box>
       </revealer>
@@ -88,13 +88,13 @@ function WifiPanel({ wifi }: { wifi: Wifi }) {
       <box spacing={8}>
         <label class="section-title" label="Wi-Fi" hexpand xalign={0} />
         <button class="scan-toggle" onClicked={() => wifi.scan()}>
-          <label label={scanning((s) => (s ? "Buscando…" : "Atualizar"))} />
+          <label label={scanning((s) => (s ? "Scanning…" : "Refresh"))} />
         </button>
         <button
           class={enabled((e) => (e ? "power-toggle active" : "power-toggle"))}
           onClicked={() => wifi.set_enabled(!wifi.enabled)}
         >
-          <label label={enabled((e) => (e ? "Ativado" : "Desativado"))} />
+          <label label={enabled((e) => (e ? "On" : "Off"))} />
         </button>
       </box>
       <With value={enabled}>
@@ -104,7 +104,7 @@ function WifiPanel({ wifi }: { wifi: Wifi }) {
               <With value={sortedAps}>
                 {(list) =>
                   list.length === 0 ? (
-                    <label class="menu-empty" label="Nenhuma rede encontrada" />
+                    <label class="menu-empty" label="No networks found" />
                   ) : null
                 }
               </With>
@@ -113,7 +113,7 @@ function WifiPanel({ wifi }: { wifi: Wifi }) {
               </For>
             </box>
           ) : (
-            <label class="menu-empty" label="Wi-Fi desativado" />
+            <label class="menu-empty" label="Wi-Fi off" />
           )
         }
       </With>
@@ -140,7 +140,7 @@ export default function NetworkButton() {
           const enabled = createBinding(wf, "enabled")
           const ssid = createBinding(wf, "ssid")
           const icon = createComputed(() => wifiIconName(enabled(), !!ssid()))
-          const label = createComputed(() => (enabled() ? (ssid() ?? "Desconectado") : "Desativado"))
+          const label = createComputed(() => (enabled() ? (ssid() ?? "Disconnected") : "Off"))
 
           return (
             <box spacing={4}>
@@ -157,7 +157,7 @@ export default function NetworkButton() {
               <WifiPanel wifi={wf} />
             ) : (
               <box class="network-popover">
-                <label class="menu-empty" label="Nenhum dispositivo Wi-Fi" />
+                <label class="menu-empty" label="No Wi-Fi device" />
               </box>
             )
           }

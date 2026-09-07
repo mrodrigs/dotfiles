@@ -23,19 +23,19 @@ function formatTime(epoch: number) {
 }
 
 function formatWindow(label: string, win: RateWindow) {
-  if (!win) return `${label}: indisponível`
+  if (!win) return `${label}: unavailable`
   return (
-    `${label}: ${Math.round(win.used_percentage)}% · reinicia ${formatTime(win.resets_at)}` +
-    ` (atualizado ${formatTime(win.updated_at)})`
+    `${label}: ${Math.round(win.used_percentage)}% · resets ${formatTime(win.resets_at)}` +
+    ` (updated ${formatTime(win.updated_at)})`
   )
 }
 
 function tooltipFor(cache: UsageCache) {
   if (!cache || (!cache.five_hour && !cache.seven_day)) {
-    return "Claude Code\nSem dados ainda — abra uma sessão do Claude Code"
+    return "Claude Code\nNo data yet — open a Claude Code session"
   }
 
-  return [formatWindow("Sessão (5h)", cache.five_hour), formatWindow("Semana (7d)", cache.seven_day)].join("\n")
+  return [formatWindow("Session (5h)", cache.five_hour), formatWindow("Week (7d)", cache.seven_day)].join("\n")
 }
 
 function WindowRow({ label, win }: { label: string; win: Accessor<RateWindow> }) {
@@ -47,10 +47,10 @@ function WindowRow({ label, win }: { label: string; win: Accessor<RateWindow> })
           w ? (
             <box orientation={Gtk.Orientation.VERTICAL} halign={Gtk.Align.END}>
               <label class="usage-value" label={`${Math.round(w.used_percentage)}%`} xalign={1} />
-              <label class="usage-meta" label={`reinicia ${formatTime(w.resets_at)}`} xalign={1} />
+              <label class="usage-meta" label={`resets ${formatTime(w.resets_at)}`} xalign={1} />
             </box>
           ) : (
-            <label class="usage-meta" label="indisponível" />
+            <label class="usage-meta" label="unavailable" />
           )
         }
       </With>
@@ -70,9 +70,9 @@ export default function ClaudeUsage() {
       </box>
       <popover class="ClaudeUsagePopover">
         <box orientation={Gtk.Orientation.VERTICAL} class="claude-usage-popover" spacing={8}>
-          <label class="section-title" label="Uso do Claude Code" xalign={0} />
-          <WindowRow label="Sessão (5h)" win={cache((c) => c?.five_hour ?? null)} />
-          <WindowRow label="Semana (7d)" win={cache((c) => c?.seven_day ?? null)} />
+          <label class="section-title" label="Claude Code Usage" xalign={0} />
+          <WindowRow label="Session (5h)" win={cache((c) => c?.five_hour ?? null)} />
+          <WindowRow label="Week (7d)" win={cache((c) => c?.seven_day ?? null)} />
         </box>
       </popover>
     </menubutton>

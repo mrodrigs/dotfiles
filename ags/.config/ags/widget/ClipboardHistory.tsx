@@ -110,7 +110,7 @@ export default function ClipboardHistory() {
         <entry
           $={(self) => (entry = self)}
           class="menu-search"
-          placeholderText="Filtrar histórico..."
+          placeholderText="Filter history..."
           onNotifyText={(self) => {
             setQuery(self.text)
             setSelected(0)
@@ -120,7 +120,7 @@ export default function ClipboardHistory() {
         <With value={isEmpty}>
           {(empty) =>
             empty ? (
-              <label class="menu-empty" label="Histórico vazio" />
+              <label class="menu-empty" label="History empty" />
             ) : (
               <scrolledwindow
                 class="results"
@@ -146,7 +146,7 @@ export default function ClipboardHistory() {
                           )}
                           <box orientation={Gtk.Orientation.VERTICAL} hexpand valign={Gtk.Align.CENTER}>
                             <label
-                              label={item.type === "image" ? "Imagem" : item.preview}
+                              label={item.type === "image" ? "Image" : item.preview}
                               xalign={0}
                               maxWidthChars={48}
                               ellipsize={Pango.EllipsizeMode.END}

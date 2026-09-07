@@ -116,8 +116,8 @@ export default function AudioButton() {
       </With>
       <popover class="AudioPopover">
         <box orientation={Gtk.Orientation.VERTICAL} class="audio-popover" spacing={12}>
-          <DeviceSection title="Saída" devices={speakers} defaultDevice={speaker} />
-          <DeviceSection title="Entrada" devices={microphones} defaultDevice={microphone} />
+          <DeviceSection title="Output" devices={speakers} defaultDevice={speaker} />
+          <DeviceSection title="Input" devices={microphones} defaultDevice={microphone} />
         </box>
       </popover>
     </menubutton>

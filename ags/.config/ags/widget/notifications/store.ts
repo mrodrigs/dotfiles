@@ -45,7 +45,7 @@ function toRecord(n: InstanceType<typeof Notifd.Notification>): NotificationReco
   return {
     id: n.id,
     rev: nextRevision(n.id),
-    appName: n.appName || "Notificação",
+    appName: n.appName || "Notification",
     appIcon: n.appIcon,
     summary: n.summary,
     body: n.body,

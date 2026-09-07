@@ -19,9 +19,9 @@ export default function PowerMenu() {
   let win: Astal.Window
 
   const actions: Action[] = [
-    { label: "Bloquear", icon: "system-lock-screen-symbolic", run: () => spawn(["hyprlock"]) },
-    { label: "Sair", icon: "system-log-out-symbolic", run: () => spawn(["uwsm", "stop"]) },
-    { label: "Desligar", icon: "system-shutdown-symbolic", run: () => spawn(["systemctl", "poweroff"]) },
+    { label: "Lock", icon: "system-lock-screen-symbolic", run: () => spawn(["hyprlock"]) },
+    { label: "Log Out", icon: "system-log-out-symbolic", run: () => spawn(["uwsm", "stop"]) },
+    { label: "Shut Down", icon: "system-shutdown-symbolic", run: () => spawn(["systemctl", "poweroff"]) },
   ]
 
   function trigger(action?: Action) {

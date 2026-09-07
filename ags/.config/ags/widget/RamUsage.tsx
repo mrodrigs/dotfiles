@@ -30,7 +30,7 @@ export default function RamUsage() {
   const mem = createPoll<MemInfo | null>(null, 5000, readMemInfo)
   const percent = mem((m) => (m ? m.percent : 0))
   const tooltip = mem((m) =>
-    m ? `RAM: ${m.usedGiB.toFixed(1)}G / ${m.totalGiB.toFixed(1)}G` : "RAM: indisponível",
+    m ? `RAM: ${m.usedGiB.toFixed(1)}G / ${m.totalGiB.toFixed(1)}G` : "RAM: unavailable",
   )
 
   return (

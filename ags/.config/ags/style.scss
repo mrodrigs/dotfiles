@@ -133,6 +133,166 @@ popover.AudioPopover {
   }
 }
 
+.NotificationCenter {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  color: #fff;
+
+  button {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    background-image: none;
+    border: 0;
+    box-shadow: none;
+    outline: none;
+
+    &:hover,
+    &:active,
+    &:checked {
+      background: transparent;
+      box-shadow: none;
+    }
+  }
+
+  image {
+    color: #fff;
+    min-width: 0;
+    min-height: 0;
+
+    &.muted {
+      color: $color-danger;
+    }
+  }
+
+  .badge {
+    background: $color-danger;
+    color: $oc-bg;
+    min-width: 13px;
+    min-height: 13px;
+    border-radius: $radius-pill;
+    margin: -4px -5px 0 0;
+
+    label {
+      font-family: $font-mono;
+      font-size: 8px;
+      font-weight: bold;
+      padding: 0 3px;
+    }
+  }
+}
+
+popover.NotificationPopover {
+  > contents {
+    @include glass();
+    padding: $space-md;
+  }
+
+  .notification-popover {
+    min-width: 300px;
+  }
+
+  .popover-header {
+    .section-title {
+      font-size: 10px;
+      letter-spacing: 0.05em;
+      color: $color-fg-muted;
+    }
+
+    .mute-toggle,
+    .clear-all {
+      background: transparent;
+      color: $color-fg-muted;
+      border: 0;
+      padding: $space-xs;
+      border-radius: $radius-pill;
+
+      &:hover {
+        background: $color-surface-elevated;
+        color: $color-fg;
+      }
+    }
+
+    .mute-toggle.active {
+      color: $color-danger;
+    }
+  }
+
+  .empty {
+    padding: $space-lg;
+    color: $color-fg-muted;
+  }
+}
+
+.NotificationCard {
+  padding: $space-sm;
+  border-radius: $radius-sm;
+  border-left: 2px solid transparent;
+
+  &.critical {
+    border-left-color: $color-danger;
+  }
+
+  &.low {
+    border-left-color: $color-border-strong;
+  }
+
+  &.list:hover {
+    background: $color-surface-elevated;
+  }
+
+  &.toast {
+    @include glass();
+    min-width: 300px;
+  }
+
+  .header {
+    .app-name {
+      font-size: 10px;
+      letter-spacing: 0.03em;
+      color: $color-fg-muted;
+    }
+
+    .time {
+      font-family: $font-mono;
+      font-size: 10px;
+      color: $color-fg-muted;
+    }
+
+    .dismiss {
+      background: transparent;
+      border: 0;
+      padding: 2px;
+      border-radius: $radius-pill;
+      color: $color-fg-muted;
+
+      &:hover {
+        background: $color-surface-elevated;
+        color: $color-fg;
+      }
+    }
+  }
+
+  .summary {
+    font-size: 12px;
+    font-weight: bold;
+    color: $color-fg;
+  }
+
+  .body {
+    font-size: 11px;
+    color: $color-fg-muted;
+  }
+}
+
+window.Popups {
+  background: transparent;
+}
+
 window.Launcher {
   background: transparent;
 

@@ -7,6 +7,8 @@ import Hyprland from "gi://AstalHyprland"
 import AudioButton from "./Audio"
 import NotificationCenter from "./notifications/NotificationCenter"
 import ClaudeUsage from "./ClaudeUsage"
+import NetworkButton from "./Network"
+import BluetoothButton from "./Bluetooth"
 import CpuUsage from "./CpuUsage"
 import RamUsage from "./RamUsage"
 
@@ -97,6 +99,8 @@ export default function Bar(gdkmonitor: Gdk.Monitor) {
           </box>
           <box class="bar-section bar-section-end" spacing={10}>
             <ClaudeUsage />
+            <NetworkButton />
+            <BluetoothButton />
             <AudioButton />
             <NotificationCenter />
           </box>

@@ -68,7 +68,7 @@ in
 
   programs.ags = {
     enable = true;
-    extraPackages = with astal.packages.${pkgs.stdenv.hostPlatform.system}; [ io astal4 hyprland apps wireplumber notifd ];
+    extraPackages = with astal.packages.${pkgs.stdenv.hostPlatform.system}; [ io astal4 hyprland apps wireplumber notifd network bluetooth ];
     configDir = link "ags/.config/ags";
     systemd.enable = true;
   };

@@ -165,6 +165,49 @@ window.Bar {
       font-size: 11px;
     }
   }
+
+  .NetworkButton,
+  .BluetoothButton {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+
+    button {
+      min-width: 0;
+      min-height: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      background-image: none;
+      border: 0;
+      box-shadow: none;
+      outline: none;
+
+      &:hover,
+      &:active,
+      &:checked {
+        background: transparent;
+        box-shadow: none;
+      }
+    }
+
+    image {
+      color: #fff;
+      min-width: 0;
+      min-height: 0;
+
+      &.dim {
+        color: $color-fg-muted;
+      }
+    }
+
+    .network-label {
+      font-family: $font-mono;
+      font-size: 11px;
+    }
+  }
 }
 
 popover.AudioPopover {
@@ -219,6 +262,94 @@ popover.AudioPopover {
 
   .volume-slider {
     min-width: 120px;
+  }
+}
+
+.scan-toggle,
+.power-toggle {
+  background: $color-surface-elevated;
+  color: $color-fg-muted;
+  border: 0;
+  border-radius: $radius-pill;
+  padding: 2px $space-sm;
+  font-size: 10px;
+
+  &:hover {
+    color: $color-fg;
+  }
+}
+
+.power-toggle.active {
+  color: $color-accent-green;
+}
+
+popover.NetworkPopover {
+  > contents {
+    @include glass();
+    padding: $space-md;
+  }
+
+  .network-popover {
+    min-width: 260px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: $color-fg-muted;
+  }
+
+  .in-use-dot {
+    min-width: 6px;
+    min-height: 6px;
+    border-radius: $radius-pill;
+    background: $color-accent-green;
+  }
+
+  .ap-password {
+    padding: 0 $space-sm $space-xs;
+
+    entry {
+      font-size: 11px;
+      padding: 4px $space-sm;
+    }
+  }
+
+  .ap-connect {
+    background: $color-surface-elevated;
+    color: $color-fg;
+    border: 0;
+    border-radius: $radius-sm;
+    padding: 4px $space-sm;
+    font-size: 11px;
+
+    &:hover {
+      background: $color-border-strong;
+    }
+  }
+}
+
+popover.BluetoothPopover {
+  > contents {
+    @include glass();
+    padding: $space-md;
+  }
+
+  .bluetooth-popover {
+    min-width: 220px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    color: $color-fg-muted;
+  }
+
+  .in-use-dot {
+    min-width: 6px;
+    min-height: 6px;
+    border-radius: $radius-pill;
+    background: $color-accent-green;
   }
 }
 
@@ -449,7 +580,8 @@ window.Popups {
     background: $color-surface-elevated;
   }
 
-  &.selected {
+  &.selected,
+  &.active {
     background: rgba($oc-magenta, 0.16);
     border-left: 2px solid $color-accent-magenta;
   }
